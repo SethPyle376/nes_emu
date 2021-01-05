@@ -83,6 +83,6 @@ impl CPU {
   }
 
   pub fn executeOpcode(&mut self, opcode: Opcode) {
-    println!("Executing opcode");
+
   }
 }
