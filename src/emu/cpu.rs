@@ -1,4 +1,4 @@
-use crate::emu::Bus::Bus;
+use crate::emu::bus::Bus;
 use crate::emu::cpu_opcodes::{Opcode, Instruction, AddressingMode};
 
 pub enum InterruptType {
@@ -78,11 +78,11 @@ impl CPU {
     let opcode = Instruction::from_u8(op_byte);
 
     // Execute opcode
-    self.executeOpcode(&opcode);
+    self.execute_opcode(&opcode);
     self.pc += 1;
   }
 
-  pub fn executeOpcode(&mut self, instruction: &Instruction) {
+  pub fn execute_opcode(&mut self, instruction: &Instruction) {
     println!("EXECUTING OPCODE");
     if instruction.opcode == Opcode::ASL && instruction.addr_mode == AddressingMode::ZeroPage {
       println!("CORRECT OP");
