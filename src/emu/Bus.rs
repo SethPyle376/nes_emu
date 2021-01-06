@@ -8,7 +8,7 @@ impl Bus {
       ram: Vec::with_capacity(0x800)
     };
     bus.ram.resize(0x800, 0x00);
-    bus.ram[0] = 0xFF;
+    bus.ram[0] = 0x06;
     return bus;
   }
 

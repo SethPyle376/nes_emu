@@ -1,5 +1,5 @@
 use crate::emu::Bus::Bus;
-use crate::emu::cpu_opcodes::Opcode;
+use crate::emu::cpu_opcodes::{Opcode, Instruction, AddressingMode};
 
 pub enum InterruptType {
   IRQ,
@@ -75,14 +75,17 @@ impl CPU {
 
     // Get opcode for next program counter target
     let op_byte = self.bus.read(self.pc);
-    let opcode = Opcode::from_u8(op_byte);
+    let opcode = Instruction::from_u8(op_byte);
 
     // Execute opcode
-    self.executeOpcode(opcode);
+    self.executeOpcode(&opcode);
     self.pc += 1;
   }
 
-  pub fn executeOpcode(&mut self, opcode: Opcode) {
-
+  pub fn executeOpcode(&mut self, instruction: &Instruction) {
+    println!("EXECUTING OPCODE");
+    if instruction.opcode == Opcode::ASL && instruction.addr_mode == AddressingMode::ZeroPage {
+      println!("CORRECT OP");
+    }
   }
 }
