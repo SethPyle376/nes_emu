@@ -89,9 +89,7 @@ impl CPU {
 
   pub fn execute_opcode(&mut self, instruction: &Instruction) {
     println!("EXECUTING OPCODE");
-    if instruction.opcode == Opcode::ASL && instruction.addr_mode == AddressingMode::ZeroPage {
-      println!("CORRECT OP");
-    }
+    self.load_address_mode(&instruction.addr_mode);
   }
 
   fn load_address_mode(&mut self, addr_mode: &AddressingMode) -> u8 {
@@ -168,6 +166,49 @@ impl CPU {
           return 0;
         }
       },
+      AddressingMode::Indirect => {
+        let ptr_lo = self.bus.read(self.pc) as u16;
+        self.pc += 1;
+        let ptr_hi = self.bus.read(self.pc) as u16;
+        self.pc += 1;
+
+        let ptr = (ptr_hi << 8) | ptr_lo;
+
+        // Page boundary hardware bug simulation
+        if ptr_lo == 0x00FF {
+          self.location = (self.bus.read(ptr & 0xFF00) as u16) | self.bus.read(ptr) as u16;
+        } else {
+          self.location = ((self.bus.read(ptr + 1) as u16) << 8) | self.bus.read(ptr) as u16;
+        }
+
+        return 0;
+      },
+      AddressingMode::IndirectX => {
+        let address = self.bus.read(self.pc) as u16;
+        self.pc += 1;
+
+        let lo = self.bus.read((address + (self.r_x as u16)) & 0x00FF) as u16;
+        let hi = self.bus.read((address + (self.r_x as u16) + 1) & 0x00FF) as u16;
+
+        self.location = (hi << 8) | lo;
+        return 0;
+      },
+      AddressingMode::IndirectY => {
+        let address = self.bus.read(self.pc) as u16;
+        self.pc += 1;
+
+        let lo = self.bus.read(address & 0x00FF) as u16;
+        let hi = self.bus.read((address + 0x0001) & 0x00FF) as u16;
+
+        self.location = (hi << 8) | lo;
+        self.location += self.r_y as u16;
+
+        if (self.location & 0xFF00) != (hi << 8) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
       _ => { return 0; }
     }
   }
