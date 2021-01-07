@@ -1,5 +1,3 @@
-use std::borrow::Borrow;
-
 #[derive(Copy, Clone, PartialEq)]
 pub enum Opcode {
   BRK,

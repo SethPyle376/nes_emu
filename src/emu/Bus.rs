@@ -32,4 +32,10 @@ impl Bus {
       return 0;
     }
   }
+
+  pub fn write(&mut self, addr: u16, value: u8) {
+    if addr < 0x2000 {
+      self.ram[usize::from(addr & 0x7FF)] = value;
+    }
+  }
 }

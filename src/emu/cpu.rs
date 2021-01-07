@@ -10,26 +10,26 @@ pub enum InterruptType {
 // 6502 CPU
 pub struct CPU {
   // Registers
-  sp: u8, // Stack Pointer, Grows downward
-  r_a: u8, // Accumulator
-  r_x: u8, // Index
-  r_y: u8, // Index
-  pc: u16, // Program Counter
+  pub sp: u8, // Stack Pointer, Grows downward
+  pub r_a: u8, // Accumulator
+  pub r_x: u8, // Index
+  pub r_y: u8, // Index
+  pub pc: u16, // Program Counter
   // Cycle Counts
-  cycles: u32,
-  skip_cycles: u8,
+  pub cycles: u32,
+  pub skip_cycles: u8,
   // Status flags
-  f_c: bool,
-  f_z: bool,
-  f_i: bool,
-  f_d: bool,
-  f_v: bool,
-  f_n: bool,
-  bus: Bus,
+  pub f_c: bool,
+  pub f_z: bool,
+  pub f_i: bool,
+  pub f_d: bool,
+  pub f_v: bool,
+  pub f_n: bool,
+  pub bus: Bus,
 
-  location: u16,
-  relative_location: u16,
-  fetch_value: u8
+  pub location: u16,
+  pub relative_location: u16,
+  pub fetch_value: u8
 }
 
 impl CPU {
@@ -109,7 +109,6 @@ impl CPU {
         self.f_v = (!((self.r_a as u16) ^ op_data as u16) & ((self.r_a as u16) ^ sum) & 0x0080) != 0;
         self.f_n = sum & 0x80 != 0;
         self.r_a = (sum & 0x00FF) as u8;
-        return 1;
       },
       _ => {}
     }
