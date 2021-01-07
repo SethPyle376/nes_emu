@@ -17,7 +17,7 @@ pub struct CPU {
   pc: u16, // Program Counter
   // Cycle Counts
   cycles: u32,
-  skip_cycles: u32,
+  skip_cycles: u8,
   // Status flags
   f_c: bool,
   f_z: bool,
@@ -28,7 +28,8 @@ pub struct CPU {
   bus: Bus,
 
   location: u16,
-  relative_location: u16
+  relative_location: u16,
+  fetch_value: u8
 }
 
 impl CPU {
@@ -49,7 +50,8 @@ impl CPU {
       f_n: false,
       bus: Bus::new(),
       location: 0x0000,
-      relative_location: 0x0000
+      relative_location: 0x0000,
+      fetch_value: 0x00
     }
   }
 
@@ -71,25 +73,47 @@ impl CPU {
 
   pub fn step(&mut self) {
     self.cycles += 1;
-
     if self.skip_cycles > 0 {
       self.skip_cycles -= 1;
       return;
     }
-    self.skip_cycles = 0;
 
-    // Get opcode for next program counter target
+    // Get instruction from next program counter target
     let op_byte = self.bus.read(self.pc);
-    let opcode = Instruction::from_u8(op_byte);
-
-    // Execute opcode
-    self.execute_opcode(&opcode);
+    let instruction = Instruction::from_u8(op_byte);
     self.pc += 1;
+
+    // Execute instruction
+    let wait_cycles = self.execute_instruction(&instruction);
+    self.skip_cycles = wait_cycles;
+
+    if self.skip_cycles > 0 {
+      self.skip_cycles -= 1;
+    }
   }
 
-  pub fn execute_opcode(&mut self, instruction: &Instruction) {
-    println!("EXECUTING OPCODE");
-    self.load_address_mode(&instruction.addr_mode);
+  pub fn execute_instruction(&mut self, instruction: &Instruction) -> u8 {
+    let address_mode_cycles = self.load_address_mode(&instruction.addr_mode);
+
+    let mut op_data = self.r_a;
+
+    if instruction.addr_mode != AddressingMode::Implied {
+      op_data = self.bus.read(self.location);
+    }
+
+    match instruction.opcode {
+      Opcode::ADC => {
+        let sum = self.r_a as u16 + op_data as u16 + self.f_c as u16;
+        self.f_c = sum > 255;
+        self.f_z = (sum & 0x00FF) == 0;
+        self.f_v = (!((self.r_a as u16) ^ op_data as u16) & ((self.r_a as u16) ^ sum) & 0x0080) != 0;
+        self.f_n = sum & 0x80 != 0;
+        self.r_a = (sum & 0x00FF) as u8;
+        return 1;
+      },
+      _ => {}
+    }
+    return instruction.cycles + address_mode_cycles;
   }
 
   fn load_address_mode(&mut self, addr_mode: &AddressingMode) -> u8 {
