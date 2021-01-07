@@ -1,5 +1,6 @@
 use crate::emu::bus::Bus;
 use crate::emu::cpu_opcodes::{Opcode, Instruction, AddressingMode};
+use std::sync::{Arc, Mutex};
 
 pub enum InterruptType {
   IRQ,
@@ -25,7 +26,7 @@ pub struct CPU {
   pub f_d: bool,
   pub f_v: bool,
   pub f_n: bool,
-  pub bus: Bus,
+  pub bus: Arc<Mutex<Bus>>,
 
   pub location: u16,
   pub relative_location: u16,
@@ -33,7 +34,7 @@ pub struct CPU {
 }
 
 impl CPU {
-  pub fn new() -> CPU {
+  pub fn new(bus: Mutex<Bus>) -> CPU {
     CPU {
       sp: 0x00,
       r_a: 0x00,
@@ -48,7 +49,7 @@ impl CPU {
       f_d: false,
       f_v: false,
       f_n: false,
-      bus: Bus::new(),
+      bus: Arc::new(bus),
       location: 0x0000,
       relative_location: 0x0000,
       fetch_value: 0x00
@@ -79,7 +80,7 @@ impl CPU {
     }
 
     // Get instruction from next program counter target
-    let op_byte = self.bus.read(self.pc);
+    let op_byte = self.read(self.pc);
     let instruction = Instruction::from_u8(op_byte);
     self.pc += 1;
 
@@ -91,14 +92,24 @@ impl CPU {
       self.skip_cycles -= 1;
     }
   }
+  
+  pub fn read(&self, addr: u16) -> u8 {
+    let data = self.bus.lock().unwrap();
+    return data.read(addr);
+  }
+  
+  pub fn write(&self, addr: u16, value: u8) {
+    let mut data = self.bus.lock().unwrap();
+    data.write(addr, value);
+  }
 
-  pub fn execute_instruction(&mut self, instruction: &Instruction) -> u8 {
+  fn execute_instruction(&mut self, instruction: &Instruction) -> u8 {
     let address_mode_cycles = self.load_address_mode(&instruction.addr_mode);
 
     let mut op_data = self.r_a;
 
     if instruction.addr_mode != AddressingMode::Implied {
-      op_data = self.bus.read(self.location);
+      op_data = self.read(self.location);
     }
 
     match instruction.opcode {
@@ -126,25 +137,25 @@ impl CPU {
         return 0;
       },
       AddressingMode::ZeroPage => {
-        let msb = self.bus.read(self.pc);
+        let msb = self.read(self.pc);
         self.pc += 1;
         self.location = msb as u16 & 0x00FF;
         return 0;
       },
       AddressingMode::ZeroPageX => {
-        let msb = self.bus.read(self.pc + self.r_x as u16);
+        let msb = self.read(self.pc + self.r_x as u16);
         self.pc += 1;
         self.location = msb as u16 & 0x00FF;
         return 0;
       },
       AddressingMode::ZeroPageY => {
-        let msb = self.bus.read(self.pc + self.r_y as u16);
+        let msb = self.read(self.pc + self.r_y as u16);
         self.pc += 1;
         self.location = msb as u16 & 0x00FF;
         return 0;
       },
       AddressingMode::Relative => {
-        self.relative_location = self.bus.read(self.pc) as u16;
+        self.relative_location = self.read(self.pc) as u16;
         self.pc += 1;
         if (self.relative_location & 0x80) != 0x0000 {
           self.relative_location |= 0xFF00;
@@ -152,17 +163,17 @@ impl CPU {
         return 0;
       },
       AddressingMode::Absolute => {
-        let lo = self.bus.read(self.pc) as u16;
+        let lo = self.read(self.pc) as u16;
         self.pc += 1;
-        let hi = self.bus.read(self.pc) as u16;
+        let hi = self.read(self.pc) as u16;
         self.pc += 1;
         self.location = (hi << 8) | lo;
         return 0;
       },
       AddressingMode::AbsoluteX => {
-        let lo = self.bus.read(self.pc) as u16;
+        let lo = self.read(self.pc) as u16;
         self.pc += 1;
-        let hi = self.bus.read(self.pc) as u16;
+        let hi = self.read(self.pc) as u16;
         self.pc += 1;
 
         self.location = (hi << 8) | lo;
@@ -175,9 +186,9 @@ impl CPU {
         }
       },
       AddressingMode::AbsoluteY => {
-        let lo = self.bus.read(self.pc) as u16;
+        let lo = self.read(self.pc) as u16;
         self.pc += 1;
-        let hi = self.bus.read(self.pc) as u16;
+        let hi = self.read(self.pc) as u16;
         self.pc += 1;
 
         self.location = (hi << 8) | lo;
@@ -190,38 +201,38 @@ impl CPU {
         }
       },
       AddressingMode::Indirect => {
-        let ptr_lo = self.bus.read(self.pc) as u16;
+        let ptr_lo = self.read(self.pc) as u16;
         self.pc += 1;
-        let ptr_hi = self.bus.read(self.pc) as u16;
+        let ptr_hi = self.read(self.pc) as u16;
         self.pc += 1;
 
         let ptr = (ptr_hi << 8) | ptr_lo;
 
         // Page boundary hardware bug simulation
         if ptr_lo == 0x00FF {
-          self.location = (self.bus.read(ptr & 0xFF00) as u16) | self.bus.read(ptr) as u16;
+          self.location = (self.read(ptr & 0xFF00) as u16) | self.read(ptr) as u16;
         } else {
-          self.location = ((self.bus.read(ptr + 1) as u16) << 8) | self.bus.read(ptr) as u16;
+          self.location = ((self.read(ptr + 1) as u16) << 8) | self.read(ptr) as u16;
         }
 
         return 0;
       },
       AddressingMode::IndirectX => {
-        let address = self.bus.read(self.pc) as u16;
+        let address = self.read(self.pc) as u16;
         self.pc += 1;
 
-        let lo = self.bus.read((address + (self.r_x as u16)) & 0x00FF) as u16;
-        let hi = self.bus.read((address + (self.r_x as u16) + 1) & 0x00FF) as u16;
+        let lo = self.read((address + (self.r_x as u16)) & 0x00FF) as u16;
+        let hi = self.read((address + (self.r_x as u16) + 1) & 0x00FF) as u16;
 
         self.location = (hi << 8) | lo;
         return 0;
       },
       AddressingMode::IndirectY => {
-        let address = self.bus.read(self.pc) as u16;
+        let address = self.read(self.pc) as u16;
         self.pc += 1;
 
-        let lo = self.bus.read(address & 0x00FF) as u16;
-        let hi = self.bus.read((address + 0x0001) & 0x00FF) as u16;
+        let lo = self.read(address & 0x00FF) as u16;
+        let hi = self.read((address + 0x0001) & 0x00FF) as u16;
 
         self.location = (hi << 8) | lo;
         self.location += self.r_y as u16;
