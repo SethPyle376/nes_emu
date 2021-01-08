@@ -41,4 +41,17 @@ mod cpu_tests {
 
     assert_eq!(cpu.r_a, 0xAC);
   }
+
+  #[test]
+  fn sbc_imm_test() {
+    let bus = Mutex::new(emu::bus::Bus::new());
+    let mut cpu = emu::cpu::CPU::new(bus);
+    cpu.r_a = 0x69;
+    cpu.write(0x0000, 0xE9);
+    cpu.write(0x0001, 0x42);
+
+    run_cpu_cycles(&mut cpu, 2);
+
+    assert_eq!(cpu.r_a, 0x27);
+  }
 }

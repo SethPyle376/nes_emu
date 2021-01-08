@@ -15,6 +15,7 @@ pub struct CPU {
   pub r_a: u8, // Accumulator
   pub r_x: u8, // Index
   pub r_y: u8, // Index
+  pub r_status: u8,
   pub pc: u16, // Program Counter
   // Cycle Counts
   pub cycles: u32,
@@ -26,6 +27,7 @@ pub struct CPU {
   pub f_d: bool,
   pub f_v: bool,
   pub f_n: bool,
+  pub f_b: bool,
   pub bus: Arc<Mutex<Bus>>,
 
   pub location: u16,
@@ -40,6 +42,7 @@ impl CPU {
       r_a: 0x00,
       r_x: 0x00,
       r_y: 0x00,
+      r_status: 0x00,
       pc: 0x0000,
       cycles: 0,
       skip_cycles: 0,
@@ -49,6 +52,7 @@ impl CPU {
       f_d: false,
       f_v: false,
       f_n: false,
+      f_b: false,
       bus: Arc::new(bus),
       location: 0x0000,
       relative_location: 0x0000,
@@ -120,10 +124,98 @@ impl CPU {
         self.f_v = (!((self.r_a as u16) ^ op_data as u16) & ((self.r_a as u16) ^ sum) & 0x0080) != 0;
         self.f_n = sum & 0x80 != 0;
         self.r_a = (sum & 0x00FF) as u8;
+        return address_mode_cycles + instruction.cycles + 1;
       },
-      _ => {}
+      Opcode::SBC => {
+        let inverted = (op_data as u16) ^ 0x00FF;
+        let difference = self.r_a as u16 + inverted as u16 + self.f_c as u16 + 1;
+
+        self.f_c = difference & 0xFF00 != 0;
+        self.f_z = (difference & 0x00FF) == 0;
+        self.f_v = ((difference ^ self.r_a as u16) & (difference ^ inverted) & 0x0080) != 0;
+        self.f_n = difference & 0x0080 != 0;
+        self.r_a = (difference & 0x00FF) as u8;
+        return address_mode_cycles + instruction.cycles + 1;
+      },
+      Opcode::AND => {
+        self.r_a = self.r_a & op_data;
+        self.f_z = self.r_a == 0x00;
+        self.f_n = (self.r_a & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles + 1;
+      },
+      Opcode::ASL => {
+        let shifted = (op_data as u16) << 1;
+        self.f_c = (shifted & 0xFF00) != 0;
+        self.f_z = (shifted & 0x00FF) == 0x00;
+        self.f_n = (shifted & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles + 1;
+      },
+      Opcode::BCC => {
+        if self.f_c == false {
+          self.location = self.pc + self.relative_location;
+          self.pc = self.location;
+        }
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::BCS => {
+        if self.f_c == true {
+          self.location = self.pc + self.relative_location;
+          self.pc = self.location;
+        }
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::BEQ => {
+        if self.f_z == true {
+          self.location = self.pc + self.relative_location;
+          self.pc = self.location;
+        }
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::BIT => {
+        let bit = self.r_a & op_data;
+        self.f_z = bit == 0x00;
+        self.f_n = op_data & (1 << 7) != 0;
+        self.f_v = op_data & (1 << 6) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::BMI => {
+        if self.f_n == true {
+          self.location = self.pc + self.relative_location;
+          self.pc = self.location;
+        }
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::BNE => {
+        if self.f_z == false {
+          self.location = self.pc + self.relative_location;
+          self.pc = self.location;
+        }
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::BPL => {
+        if self.f_n == false {
+          self.location = self.pc + self.relative_location;
+          self.pc = self.location;
+        }
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::BRK => {
+        self.f_i = true;
+        self.write(0x0100 + self.sp as u16, ((self.pc >> 8) as u8) & 0x00FF);
+        self.sp -= 1;
+        self.write(0x0100 + self.sp as u16, (self.pc & 0x00FF) as u8);
+        self.sp -= 1;
+
+        self.f_b = true;
+        self.write(0x0100 + self.sp as u16, self.r_status);
+        self.sp -= 1;
+        self.f_b = false;
+
+        self.pc = self.read(0xFFFE) as u16 | self.read(0xFFFF) as u16;
+        return address_mode_cycles + instruction.cycles;
+      }
+      _ => { return address_mode_cycles + instruction.cycles; }
     }
-    return instruction.cycles + address_mode_cycles;
   }
 
   fn load_address_mode(&mut self, addr_mode: &AddressingMode) -> u8 {
