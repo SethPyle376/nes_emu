@@ -213,6 +213,151 @@ impl CPU {
 
         self.pc = self.read(0xFFFE) as u16 | self.read(0xFFFF) as u16;
         return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::BVC => {
+        if self.f_v == false {
+          self.location = self.pc + self.relative_location;
+          self.pc = self.location;
+        }
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::BVS => {
+        if self.f_v == true {
+          self.location = self.pc + self.relative_location;
+          self.pc = self.location;
+        }
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::CLC => {
+        self.f_c = false;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::CLD => {
+        self.f_d = false;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::CLI => {
+        self.f_i = false;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::CLV => {
+        self.f_v = false;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::CMP => {
+        let difference = self.r_a as u16 - op_data as u16;
+        self.f_c = self.r_a >= op_data;
+        self.f_z = (difference & 0x00FF) == 0;
+        self.f_n = (difference & 0x800) != 0;
+        return address_mode_cycles + instruction.cycles + 1;
+      },
+      Opcode::CPX => {
+        let difference = self.r_x as u16 - op_data as u16;
+        self.f_c = self.r_x >= op_data;
+        self.f_z = (difference & 0x00FF) == 0x0000;
+        self.f_n = (difference & 0x800) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::CPY => {
+        let difference = self.r_y as u16 - op_data as u16;
+        self.f_c = self.r_y >= op_data;
+        self.f_z = (difference & 0x00FF) == 0x0000;
+        self.f_n = (difference & 0x800) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::DEC => {
+        let difference = op_data - 1;
+        self.write(self.location, difference);
+        self.f_z = (difference & 0x00FF) == 0;
+        self.f_n = (difference & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::DEX => {
+        self.r_x -= 1;
+        self.f_z = self.r_x == 0;
+        self.f_n = (self.r_x & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::DEY => {
+        self.r_y -= 1;
+        self.f_z = self.r_y == 0;
+        self.f_n = (self.r_y & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::EOR => {
+        self.r_a = self.r_a ^ op_data;
+        self.f_z = self.r_a == 0;
+        self.f_n = (self.r_a & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles + 1;
+      },
+      Opcode::INC => {
+        let value = op_data + 1;
+        self.write(self.location, value & 0x00FF);
+        self.f_z = (value & 0x00FF) == 0;
+        self.f_n = (value & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::INX => {
+        self.r_x += 1;
+        self.f_z = self.r_x == 0;
+        self.f_n = (self.r_x & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::INY => {
+        self.r_y += 1;
+        self.f_z = self.r_y == 0;
+        self.f_n = (self.r_y & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::JMP => {
+        self.pc = self.location;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::JSR => {
+        self.pc -= 1;
+
+        self.write(0x0100 + self.sp as u16, ((self.pc >> 8) & 0x00FF) as u8);
+        self.sp -= 1;
+        self.write(0x0100 + self.sp as u16, (self.pc & 0x00FF) as u8);
+        self.sp -= 1;
+
+        self.pc = self.location;
+
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::LDA => {
+        self.r_a = op_data;
+        self.f_z = self.r_a == 0x00;
+        self.f_n = (self.r_a & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles + 1;
+      },
+      Opcode::LDX => {
+        self.r_x = op_data;
+        self.f_z = self.r_x == 0x00;
+        self.f_n = (self.r_x & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles + 1;
+      },
+      Opcode::LDY => {
+        self.r_y = op_data;
+        self.f_z = self.r_y == 0x00;
+        self.f_n = (self.r_y & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles + 1;
+      },
+      Opcode::LSR => {
+        self.f_c = (op_data & 0x0001) != 0;
+        let shifted = op_data >> 1;
+        self.f_z = shifted == 0;
+        self.f_n = (shifted & 0x80) != 0;
+
+        if instruction.addr_mode == AddressingMode::Implied {
+          self.r_a = shifted;
+        } else {
+          self.write(self.location, shifted);
+        }
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::NOP => {
+        return address_mode_cycles + instruction.cycles;
       }
       _ => { return address_mode_cycles + instruction.cycles; }
     }
