@@ -28,6 +28,7 @@ pub struct CPU {
   pub f_v: bool,
   pub f_n: bool,
   pub f_b: bool,
+  pub f_u: bool,
   pub bus: Arc<Mutex<Bus>>,
 
   pub location: u16,
@@ -53,6 +54,7 @@ impl CPU {
       f_v: false,
       f_n: false,
       f_b: false,
+      f_u: false,
       bus: Arc::new(bus),
       location: 0x0000,
       relative_location: 0x0000,
@@ -357,6 +359,35 @@ impl CPU {
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::NOP => {
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::ORA => {
+        self.r_a |= op_data;
+        self.f_z = self.r_a == 0;
+        self.f_n = (self.r_a & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles + 1;
+      },
+      Opcode::PHA => {
+        self.write(0x0100 + self.sp as u16, self.r_a);
+        self.sp -= 1;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::PHP => {
+        self.write(0x0100 + self.sp as u16, self.r_status);
+        self.f_b = false;
+        self.f_u = false;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::PLA => {
+        self.sp += 1;
+        self.r_a = self.read(self.sp as u16 + 0x0100);
+        self.f_z = self.r_a == 0;
+        self.f_n = (self.r_a & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::PLP => {
+        self.sp += 1;
+        self.r_status = self.read(0x100 + self.sp as u16);
         return address_mode_cycles + instruction.cycles;
       }
       _ => { return address_mode_cycles + instruction.cycles; }
