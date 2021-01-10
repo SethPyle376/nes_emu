@@ -1,15 +1,18 @@
 #![allow(dead_code)]
 mod emu;
 use emu::cpu::CPU;
-use std::sync::Mutex;
+use emu::debug_interface::DebugInterface;
+use std::sync::{Mutex, Arc};
 
 fn main() {
   let bus = Mutex::new(emu::bus::Bus::new());
-  let mut cpu = CPU::new(bus);
-  let mut cycle_count = 0;
-  let cycle_max = 100;
-  while cycle_count < cycle_max {
-    cpu.step();
-    cycle_count += 1;
-  }
+  let mut cpu = Arc::new(Mutex::new(CPU::new(bus)));
+
+  let interface = DebugInterface::new(&cpu);
+  interface.test();
+
+  cpu.lock().unwrap().pc = 0xFF;
+  cpu.lock().unwrap().write(0x0000, 0x69);
+
+  interface.test();
 }

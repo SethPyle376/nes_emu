@@ -66,6 +66,18 @@ impl CPU {
     self.r_a = 0x00;
     self.r_x = 0x00;
     self.r_y = 0x00;
+    self.sp = 0xFD;
+    self.r_status = 0x00 | ((self.f_u as u8) << 5);
+
+    self.location = 0xFFFC;
+
+    let lo = self.read(self.location);
+    let hi = self.read(self.location + 1);
+
+    self.pc = ((hi as u16) << 8) | (lo as u16);
+
+    self.location = 0x0000;
+    self.relative_location = 0x0000;
 
     self.f_c = false;
     self.f_z = false;
@@ -75,7 +87,57 @@ impl CPU {
     self.f_n = false;
 
     self.cycles = 0;
-    self.skip_cycles = 0;
+    self.skip_cycles = 8;
+  }
+
+  pub fn interrupt(&mut self) {
+    if self.f_i == true {
+      return;
+    }
+
+    self.write(0x0100 + (self.sp as u16), (self.pc >> 8) as u8);
+    self.sp -= 1;
+    self.write(0x0100 + (self.sp as u16), (self.pc & 0x00FF) as u8);
+    self.sp -= 1;
+
+    self.f_b = false;
+    self.f_u = true;
+    self.f_i = true;
+
+    self.write(0x0100 + (self.sp as u16), self.r_status);
+    self.sp -= 1;
+
+    self.location = 0xFFFE;
+
+    let lo = self.read(self.location);
+    let hi = self.read(self.location + 1);
+
+    self.pc = ((hi as u16) << 8) | (lo as u16);
+
+    self.skip_cycles = 7;
+  }
+
+  pub fn non_maskable_interrupt(&mut self) {
+    self.write(0x0100 + (self.sp as u16), (self.pc >> 8) as u8);
+    self.sp -= 1;
+    self.write(0x0100 + (self.sp as u16), (self.pc & 0x00FF) as u8);
+    self.sp -= 1;
+
+    self.f_b = false;
+    self.f_u = true;
+    self.f_i = true;
+
+    self.write(0x0100 + (self.sp as u16), self.r_status);
+    self.sp -= 1;
+
+    self.location = 0xFFFA;
+
+    let lo = self.read(self.location);
+    let hi = self.read(self.location + 1);
+
+    self.pc = ((hi as u16) << 8) | (lo as u16);
+
+    self.skip_cycles = 8;
   }
 
   pub fn step(&mut self) {
@@ -422,8 +484,8 @@ impl CPU {
       Opcode::RTI => {
         self.sp += 1;
         self.r_status = self.read(0x0100 + self.sp as u16);
-        self.r_status &= (((!self.f_b) as u8) << 4);
-        self.r_status &= (((!self.f_u) as u8) << 5);
+        self.r_status &= ((!self.f_b) as u8) << 4;
+        self.r_status &= ((!self.f_u) as u8) << 5;
 
         self.sp += 1;
         self.pc = self.read(self.sp as u16 + 0x100) as u16;
