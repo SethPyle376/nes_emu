@@ -32,12 +32,11 @@ pub struct CPU {
   pub bus: Arc<Mutex<Bus>>,
 
   pub location: u16,
-  pub relative_location: u16,
-  pub fetch_value: u8
+  pub relative_location: u16
 }
 
 impl CPU {
-  pub fn new(bus: Mutex<Bus>) -> CPU {
+  pub fn new(bus: &Arc<Mutex<Bus>>) -> CPU {
     CPU {
       sp: 0x00,
       r_a: 0x00,
@@ -55,10 +54,9 @@ impl CPU {
       f_n: false,
       f_b: false,
       f_u: false,
-      bus: Arc::new(bus),
+      bus: Arc::clone(bus),
       location: 0x0000,
-      relative_location: 0x0000,
-      fetch_value: 0x00
+      relative_location: 0x0000
     }
   }
 

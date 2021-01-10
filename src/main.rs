@@ -3,24 +3,36 @@ mod emu;
 use emu::cpu::CPU;
 use emu::debug_interface::DebugInterface;
 use std::sync::{Mutex, Arc};
+use clap::Clap;
+
+// fn str_to_bool(s: &str) -> Result<bool, &'static str> {
+//   match s {
+//     "true" => Ok(true),
+//     "false" => Ok(false),
+//     _ => Err("expected true or false")
+//   }
+// }
+
+#[derive(Clap)]
+struct Opts {
+  #[clap(long, parse(try_from_str), default_value = "false")]
+  pub debug_interface: bool,
+}
 
 fn main() {
-  let bus = Mutex::new(emu::bus::Bus::new());
-  let cpu = Arc::new(Mutex::new(CPU::new(bus)));
+  let opts = Opts::parse();
+  let bus = Arc::new(Mutex::new(emu::bus::Bus::new()));
+  let cpu = Arc::new(Mutex::new(CPU::new(&bus)));
 
-  let mut interface = DebugInterface::new(&cpu, 60);
-
-  cpu.lock().unwrap().pc = 0xFF;
-  cpu.lock().unwrap().write(0x0000, 0x69);
-  cpu.lock().unwrap().write(0x0001, 0x70);
-  cpu.lock().unwrap().write(0x0002, 0x71);
-  cpu.lock().unwrap().write(0x00FF, 0x42);
+  let mut interface = DebugInterface::new(&cpu, 30);
 
   let mut cycles = 0;
 
-  while interface.should_quit != true {
-    interface.draw();
-    cpu.lock().unwrap().bus.lock().unwrap().ram[0x0003] += 1;
+  while cycles < 256 {
+    if opts.debug_interface {
+      interface.draw();
+    }
     cycles += 1;
   }
+  interface.cleanup();
 }

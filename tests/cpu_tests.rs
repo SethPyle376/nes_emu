@@ -3,7 +3,7 @@ extern crate nes_emu;
 
 mod cpu_tests {
   use nes_emu::emu;
-  use std::sync::Mutex;
+  use std::sync::{Mutex, Arc};
 
   fn run_cpu_cycles(cpu: &mut emu::cpu::CPU, cycles: u32) {
     for _x in 0..cycles {
@@ -13,8 +13,8 @@ mod cpu_tests {
 
   #[test]
   fn adc_imm_test() {
-    let bus = Mutex::new(emu::bus::Bus::new());
-    let mut cpu = emu::cpu::CPU::new(bus);
+    let bus = Arc::new(Mutex::new(emu::bus::Bus::new()));
+    let mut cpu = emu::cpu::CPU::new(&bus);
     cpu.write(0x0000, 0x69);
     cpu.write(0x0001, 0x24);
     cpu.write(0x0002, 0x69);
@@ -25,8 +25,8 @@ mod cpu_tests {
 
   #[test]
   fn adc_abs_test() {
-    let bus = Mutex::new(emu::bus::Bus::new());
-    let mut cpu = emu::cpu::CPU::new(bus);
+    let bus = Arc::new(Mutex::new(emu::bus::Bus::new()));
+    let mut cpu = emu::cpu::CPU::new(&bus);
     cpu.write(0x0000, 0x6D);
     cpu.write(0x0001, 0x00);
     cpu.write(0x0002, 0x04);
@@ -44,8 +44,8 @@ mod cpu_tests {
 
   #[test]
   fn sbc_imm_test() {
-    let bus = Mutex::new(emu::bus::Bus::new());
-    let mut cpu = emu::cpu::CPU::new(bus);
+    let bus = Arc::new(Mutex::new(emu::bus::Bus::new()));
+    let mut cpu = emu::cpu::CPU::new(&bus);
     cpu.r_a = 0x69;
     cpu.write(0x0000, 0xE9);
     cpu.write(0x0001, 0x42);
