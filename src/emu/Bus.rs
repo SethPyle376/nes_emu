@@ -1,5 +1,5 @@
 pub struct Bus {
-  ram: Vec<u8>,
+  pub ram: Vec<u8>,
 }
 
 impl Bus {
@@ -8,14 +8,6 @@ impl Bus {
       ram: Vec::with_capacity(0x800)
     };
     bus.ram.resize(0x800, 0x00);
-    bus.ram[0] = 0x6D;
-    bus.ram[1] = 0x00;
-    bus.ram[2] = 0x04;
-    bus.ram[0x400] = 0x69;
-    bus.ram[3] = 0x6D;
-    bus.ram[4] = 0x00;
-    bus.ram[5] = 0x05;
-    bus.ram[0x500] = 0x43;
     return bus;
   }
 
