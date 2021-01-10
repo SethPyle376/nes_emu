@@ -9,3 +9,4 @@ edition = "2018"
 [dependencies]
 tui = "0.14.0"
 hex = "0.4.2"
+termion = "1.5.5"
