@@ -373,7 +373,8 @@ impl CPU {
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::PHP => {
-        self.write(0x0100 + self.sp as u16, self.r_status);
+        let stored_status = self.r_status | (self.f_b as u8) << 4 | (self.f_u as u8) << 5;
+        self.write(0x0100 + self.sp as u16, stored_status);
         self.f_b = false;
         self.f_u = false;
         return address_mode_cycles + instruction.cycles;
@@ -388,9 +389,119 @@ impl CPU {
       Opcode::PLP => {
         self.sp += 1;
         self.r_status = self.read(0x100 + self.sp as u16);
+        self.f_u = true;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::ROL => {
+        let shifted = ((op_data as u16) << 1) | self.f_c as u16;
+        self.f_c = (shifted & 0xFF00) != 0;
+        self.f_z = (shifted & 0x00FF) == 0;
+        self.f_n = (shifted & 0x80) != 0;
+
+        if instruction.addr_mode == AddressingMode::Implied {
+          self.r_a = (shifted & 0x00FF) as u8;
+        } else {
+          self.write(self.location, (shifted & 0x00FF) as u8);
+        }
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::ROR => {
+        let shifted = ((self.f_c as u16) << 7) | (op_data >> 1) as u16;
+        self.f_c = (op_data & 0x01) != 0;
+        self.f_z = (shifted & 0x00FF) == 0;
+        self.f_n = (shifted & 0x80) != 0;
+
+        if instruction.addr_mode == AddressingMode::Implied {
+          self.r_a = (shifted & 0x00FF) as u8;
+        } else {
+          self.write(self.location, (shifted & 0x00FF) as u8);
+        }
+
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::RTI => {
+        self.sp += 1;
+        self.r_status = self.read(0x0100 + self.sp as u16);
+        self.r_status &= (((!self.f_b) as u8) << 4);
+        self.r_status &= (((!self.f_u) as u8) << 5);
+
+        self.sp += 1;
+        self.pc = self.read(self.sp as u16 + 0x100) as u16;
+        self.sp += 1;
+        self.pc |= (self.read(self.sp as u16 + 0x100) as u16) << 8;
+
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::RTS => {
+        self.sp += 1;
+        self.pc = self.read(self.sp as u16 + 0x100) as u16;
+        self.sp += 1;
+        self.pc |= (self.read(self.sp as u16 + 0x100) as u16) << 8;
+
+        self.pc += 1;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::SEC => {
+        self.f_c = true;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::SED => {
+        self.f_d = true;
         return address_mode_cycles + instruction.cycles;
       }
-      _ => { return address_mode_cycles + instruction.cycles; }
+      Opcode::SEI => {
+        self.f_i = true;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::STA => {
+        self.write(self.location, self.r_a);
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::STX => {
+        self.write(self.location, self.r_x);
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::STY => {
+        self.write(self.location, self.r_y);
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::TAX => {
+        self.r_x = self.r_a;
+        self.f_z = self.r_x == 0x00;
+        self.f_n = (self.r_x & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::TAY => {
+        self.r_y = self.r_a;
+        self.f_z = self.r_y == 0x00;
+        self.f_n = (self.r_y & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::TSX => {
+        self.r_x = self.sp;
+        self.f_z = self.r_x == 0x00;
+        self.f_n = (self.r_x & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::TXA => {
+        self.r_a = self.r_x;
+        self.f_z = self.r_a == 0x00;
+        self.f_n = (self.r_a & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::TXS => {
+        self.sp = self.r_x;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::TYA => {
+        self.r_a = self.r_y;
+        self.f_z = self.r_a == 0x00;
+        self.f_n = (self.r_a & 0x80) != 0;
+        return address_mode_cycles + instruction.cycles;
+      },
+      Opcode::UnknownOperation => {
+        return address_mode_cycles + instruction.cycles;
+      }
     }
   }
 
