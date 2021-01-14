@@ -36,7 +36,7 @@ impl DebugInterface {
       cpu: cpu.clone(),
       bus: Arc::clone(&cpu.lock().unwrap().bus),
       terminal,
-      frame_duration: 1000 / frame_rate as u64,
+      frame_duration: 1_000_000 / frame_rate as u64,
       state: TableState::default(),
       last_draw: Instant::now(),
       should_quit: false
