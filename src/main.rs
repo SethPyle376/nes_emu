@@ -5,6 +5,7 @@ use emu::debug_interface::DebugInterface;
 use std::sync::{Mutex, Arc};
 use clap::Clap;
 use std::time::Instant;
+use crate::emu::nes::NES;
 
 #[derive(Clap)]
 struct Opts {
@@ -14,15 +15,14 @@ struct Opts {
 
 fn main() {
   let opts = Opts::parse();
-  let bus = Arc::new(Mutex::new(emu::bus::Bus::new()));
-  let cpu = Arc::new(Mutex::new(CPU::new(&bus)));
+  let nes = NES::new();
 
-  let mut interface = DebugInterface::new(&cpu, 10);
+  let mut interface = DebugInterface::new(&nes.cpu, 10);
 
   let mut cycles = 0;
 
   {
-    let mut lock = bus.lock().unwrap();
+    let mut lock = nes.bus.lock().unwrap();
     lock.ram[0x0000] = 0x69;
     lock.ram[0x0001] = 0x24;
     lock.ram[0x0002] = 0x69;
@@ -39,7 +39,7 @@ fn main() {
     if opts.debug_interface {
       interface.draw();
     }
-    cpu.lock().unwrap().step();
+    nes.cpu.lock().unwrap().step();
     cycles += 1;
     let second = Instant::now();
 
@@ -48,5 +48,5 @@ fn main() {
   }
   interface.cleanup();
 
-  println!("{:?} average FPS", 1_000_000_000 / (duration_total / 20560000));
+  println!("{:?} average cpu cycles per second", 1_000_000_000 / (duration_total / 20560000));
 }

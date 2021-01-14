@@ -13,7 +13,7 @@ mod cpu_tests {
 
   #[test]
   fn adc_imm_test() {
-    let bus = Arc::new(Mutex::new(emu::bus::Bus::new()));
+    let bus = Arc::new(Mutex::new(emu::bus::Bus::new(&Arc::new(Mutex::new(emu::ppu::PPU::new())))));
     let mut cpu = emu::cpu::CPU::new(&bus);
     cpu.write(0x0000, 0x69);
     cpu.write(0x0001, 0x24);
@@ -25,7 +25,7 @@ mod cpu_tests {
 
   #[test]
   fn adc_abs_test() {
-    let bus = Arc::new(Mutex::new(emu::bus::Bus::new()));
+    let bus = Arc::new(Mutex::new(emu::bus::Bus::new(&Arc::new(Mutex::new(emu::ppu::PPU::new())))));
     let mut cpu = emu::cpu::CPU::new(&bus);
     cpu.write(0x0000, 0x6D);
     cpu.write(0x0001, 0x00);
@@ -44,7 +44,7 @@ mod cpu_tests {
 
   #[test]
   fn sbc_imm_test() {
-    let bus = Arc::new(Mutex::new(emu::bus::Bus::new()));
+    let bus = Arc::new(Mutex::new(emu::bus::Bus::new(&Arc::new(Mutex::new(emu::ppu::PPU::new())))));
     let mut cpu = emu::cpu::CPU::new(&bus);
     cpu.r_a = 0x69;
     cpu.write(0x0000, 0xE9);
