@@ -1,11 +1,10 @@
 #![allow(dead_code)]
 mod emu;
-use emu::cpu::CPU;
-use emu::debug_interface::DebugInterface;
-use std::sync::{Mutex, Arc};
+
 use clap::Clap;
 use std::time::Instant;
 use crate::emu::nes::NES;
+use crate::emu::bus::Bus;
 
 #[derive(Clap)]
 struct Opts {
@@ -14,39 +13,30 @@ struct Opts {
 }
 
 fn main() {
-  let opts = Opts::parse();
-  let nes = NES::new();
+  let mut nes = NES::new();
 
-  let mut interface = DebugInterface::new(&nes.cpu, 10);
-
+  let cycle_count = 100_000_000;
   let mut cycles = 0;
 
-  {
-    let mut lock = nes.bus.lock().unwrap();
-    lock.ram[0x0000] = 0x69;
-    lock.ram[0x0001] = 0x24;
-    lock.ram[0x0002] = 0x69;
-    lock.ram[0x0003] = 0x32;
-    lock.ram[0x0004] = 0x4C;
-    lock.ram[0x0005] = 0x00;
-    lock.ram[0x0006] = 0x00;
-  }
+  let mut bus = Bus::new();
+  bus.ram[0x0000] = 0x69;
+  bus.ram[0x0001] = 0x24;
+  bus.ram[0x0002] = 0x69;
+  bus.ram[0x0003] = 0x32;
+  bus.ram[0x0004] = 0x4C;
+  bus.ram[0x0005] = 0x00;
+  bus.ram[0x0006] = 0x00;
 
-  let mut duration_total : u128 = 0;
-
-  while cycles < 20_560_000 {
-    let first = Instant::now();
-    if opts.debug_interface {
-      interface.draw();
-    }
-    nes.cpu.lock().unwrap().step();
+  let start = Instant::now();
+  while cycles < cycle_count {
+    nes.cpu.step(&mut bus);
     cycles += 1;
-    let second = Instant::now();
-
-    let duration = second.duration_since(first);
-    duration_total += duration.as_nanos()
   }
-  interface.cleanup();
+  let end = Instant::now();
 
-  println!("{:?} average cpu cycles per second", 1_000_000_000 / (duration_total / 20560000));
+  let duration = end - start;
+
+  let cycles_per_second = cycle_count as f64 / duration.as_secs_f64();
+
+  println!("{} CYCLES PER SECOND", cycles_per_second);
 }

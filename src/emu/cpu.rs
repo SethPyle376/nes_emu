@@ -1,6 +1,5 @@
 use crate::emu::bus::Bus;
 use crate::emu::cpu_opcodes::{Opcode, Instruction, AddressingMode};
-use std::sync::{Arc, Mutex};
 
 pub enum InterruptType {
   IRQ,
@@ -29,14 +28,13 @@ pub struct CPU {
   pub f_n: bool,
   pub f_b: bool,
   pub f_u: bool,
-  pub bus: Arc<Mutex<Bus>>,
 
   pub location: u16,
   pub relative_location: u16
 }
 
 impl CPU {
-  pub fn new(bus: &Arc<Mutex<Bus>>) -> CPU {
+  pub fn new() -> CPU {
     CPU {
       sp: 0x00,
       r_a: 0x00,
@@ -54,13 +52,12 @@ impl CPU {
       f_n: false,
       f_b: false,
       f_u: false,
-      bus: Arc::clone(bus),
       location: 0x0000,
       relative_location: 0x0000
     }
   }
 
-  pub fn reset(&mut self) {
+  pub fn reset(&mut self, bus: &Bus) {
     self.r_a = 0x00;
     self.r_x = 0x00;
     self.r_y = 0x00;
@@ -69,8 +66,8 @@ impl CPU {
 
     self.location = 0xFFFC;
 
-    let lo = self.read(self.location);
-    let hi = self.read(self.location + 1);
+    let lo = bus.read(self.location);
+    let hi = bus.read(self.location + 1);
 
     self.pc = ((hi as u16) << 8) | (lo as u16);
 
@@ -88,57 +85,57 @@ impl CPU {
     self.skip_cycles = 8;
   }
 
-  pub fn interrupt(&mut self) {
+  pub fn interrupt(&mut self, bus: &mut Bus) {
     if self.f_i == true {
       return;
     }
 
-    self.write(0x0100 + (self.sp as u16), (self.pc >> 8) as u8);
+    bus.write(0x0100 + (self.sp as u16), (self.pc >> 8) as u8);
     self.sp -= 1;
-    self.write(0x0100 + (self.sp as u16), (self.pc & 0x00FF) as u8);
+    bus.write(0x0100 + (self.sp as u16), (self.pc & 0x00FF) as u8);
     self.sp -= 1;
 
     self.f_b = false;
     self.f_u = true;
     self.f_i = true;
 
-    self.write(0x0100 + (self.sp as u16), self.r_status);
+    bus.write(0x0100 + (self.sp as u16), self.r_status);
     self.sp -= 1;
 
     self.location = 0xFFFE;
 
-    let lo = self.read(self.location);
-    let hi = self.read(self.location + 1);
+    let lo = bus.read(self.location);
+    let hi = bus.read(self.location + 1);
 
     self.pc = ((hi as u16) << 8) | (lo as u16);
 
     self.skip_cycles = 7;
   }
 
-  pub fn non_maskable_interrupt(&mut self) {
-    self.write(0x0100 + (self.sp as u16), (self.pc >> 8) as u8);
+  pub fn non_maskable_interrupt(&mut self, bus: &mut Bus) {
+    bus.write(0x0100 + (self.sp as u16), (self.pc >> 8) as u8);
     self.sp -= 1;
-    self.write(0x0100 + (self.sp as u16), (self.pc & 0x00FF) as u8);
+    bus.write(0x0100 + (self.sp as u16), (self.pc & 0x00FF) as u8);
     self.sp -= 1;
 
     self.f_b = false;
     self.f_u = true;
     self.f_i = true;
 
-    self.write(0x0100 + (self.sp as u16), self.r_status);
+    bus.write(0x0100 + (self.sp as u16), self.r_status);
     self.sp -= 1;
 
     self.location = 0xFFFA;
 
-    let lo = self.read(self.location);
-    let hi = self.read(self.location + 1);
+    let lo = bus.read(self.location);
+    let hi = bus.read(self.location + 1);
 
     self.pc = ((hi as u16) << 8) | (lo as u16);
 
     self.skip_cycles = 8;
   }
 
-  pub fn step(&mut self) {
+  pub fn step(&mut self, bus: &mut Bus) {
     self.cycles += 1;
     if self.skip_cycles > 0 {
       self.skip_cycles -= 1;
@@ -146,12 +143,12 @@ impl CPU {
     }
 
     // Get instruction from next program counter target
-    let op_byte = self.read(self.pc);
+    let op_byte = bus.read(self.pc);
     let instruction = Instruction::from_u8(op_byte);
     self.pc += 1;
 
     // Execute instruction
-    let wait_cycles = self.execute_instruction(&instruction);
+    let wait_cycles = self.execute_instruction(&instruction, bus);
     self.skip_cycles = wait_cycles;
 
     if self.skip_cycles > 0 {
@@ -159,23 +156,21 @@ impl CPU {
     }
   }
   
-  pub fn read(&self, addr: u16) -> u8 {
-    let data = self.bus.lock().unwrap();
-    return data.read(addr);
+  pub fn read(&self, addr: u16, bus: &Bus) -> u8 {
+    bus.read(addr)
   }
   
-  pub fn write(&self, addr: u16, value: u8) {
-    let mut data = self.bus.lock().unwrap();
-    data.write(addr, value);
+  pub fn write(&mut self, addr: u16, value: u8, bus: &mut Bus) {
+    bus.write(addr, value);
   }
 
-  fn execute_instruction(&mut self, instruction: &Instruction) -> u8 {
-    let address_mode_cycles = self.load_address_mode(&instruction.addr_mode);
+  fn execute_instruction(&mut self, instruction: &Instruction, bus: &mut Bus) -> u8 {
+    let address_mode_cycles = self.load_address_mode(&instruction.addr_mode, bus);
 
     let mut op_data = self.r_a;
 
     if instruction.addr_mode != AddressingMode::Implied {
-      op_data = self.read(self.location);
+      op_data = bus.read(self.location);
     }
 
     match instruction.opcode {
@@ -263,17 +258,17 @@ impl CPU {
       },
       Opcode::BRK => {
         self.f_i = true;
-        self.write(0x0100 + self.sp as u16, ((self.pc >> 8) as u8) & 0x00FF);
+        bus.write(0x0100 + self.sp as u16, ((self.pc >> 8) as u8) & 0x00FF);
         self.sp -= 1;
-        self.write(0x0100 + self.sp as u16, (self.pc & 0x00FF) as u8);
+        bus.write(0x0100 + self.sp as u16, (self.pc & 0x00FF) as u8);
         self.sp -= 1;
 
         self.f_b = true;
-        self.write(0x0100 + self.sp as u16, self.r_status);
+        bus.write(0x0100 + self.sp as u16, self.r_status);
         self.sp -= 1;
         self.f_b = false;
 
-        self.pc = self.read(0xFFFE) as u16 | self.read(0xFFFF) as u16;
+        self.pc = bus.read(0xFFFE) as u16 | bus.read(0xFFFF) as u16;
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::BVC => {
@@ -329,7 +324,7 @@ impl CPU {
       },
       Opcode::DEC => {
         let difference = op_data - 1;
-        self.write(self.location, difference);
+        bus.write(self.location, difference);
         self.f_z = (difference & 0x00FF) == 0;
         self.f_n = (difference & 0x80) != 0;
         return address_mode_cycles + instruction.cycles;
@@ -354,7 +349,7 @@ impl CPU {
       },
       Opcode::INC => {
         let value = op_data + 1;
-        self.write(self.location, value & 0x00FF);
+        bus.write(self.location, value & 0x00FF);
         self.f_z = (value & 0x00FF) == 0;
         self.f_n = (value & 0x80) != 0;
         return address_mode_cycles + instruction.cycles;
@@ -378,9 +373,9 @@ impl CPU {
       Opcode::JSR => {
         self.pc -= 1;
 
-        self.write(0x0100 + self.sp as u16, ((self.pc >> 8) & 0x00FF) as u8);
+        bus.write(0x0100 + self.sp as u16, ((self.pc >> 8) & 0x00FF) as u8);
         self.sp -= 1;
-        self.write(0x0100 + self.sp as u16, (self.pc & 0x00FF) as u8);
+        bus.write(0x0100 + self.sp as u16, (self.pc & 0x00FF) as u8);
         self.sp -= 1;
 
         self.pc = self.location;
@@ -414,7 +409,7 @@ impl CPU {
         if instruction.addr_mode == AddressingMode::Implied {
           self.r_a = shifted;
         } else {
-          self.write(self.location, shifted);
+          bus.write(self.location, shifted);
         }
         return address_mode_cycles + instruction.cycles;
       },
@@ -428,27 +423,27 @@ impl CPU {
         return address_mode_cycles + instruction.cycles + 1;
       },
       Opcode::PHA => {
-        self.write(0x0100 + self.sp as u16, self.r_a);
+        bus.write(0x0100 + self.sp as u16, self.r_a);
         self.sp -= 1;
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::PHP => {
         let stored_status = self.r_status | (self.f_b as u8) << 4 | (self.f_u as u8) << 5;
-        self.write(0x0100 + self.sp as u16, stored_status);
+        bus.write(0x0100 + self.sp as u16, stored_status);
         self.f_b = false;
         self.f_u = false;
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::PLA => {
         self.sp += 1;
-        self.r_a = self.read(self.sp as u16 + 0x0100);
+        self.r_a = bus.read(self.sp as u16 + 0x0100);
         self.f_z = self.r_a == 0;
         self.f_n = (self.r_a & 0x80) != 0;
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::PLP => {
         self.sp += 1;
-        self.r_status = self.read(0x100 + self.sp as u16);
+        self.r_status = bus.read(0x100 + self.sp as u16);
         self.f_u = true;
         return address_mode_cycles + instruction.cycles;
       },
@@ -461,7 +456,7 @@ impl CPU {
         if instruction.addr_mode == AddressingMode::Implied {
           self.r_a = (shifted & 0x00FF) as u8;
         } else {
-          self.write(self.location, (shifted & 0x00FF) as u8);
+          bus.write(self.location, (shifted & 0x00FF) as u8);
         }
         return address_mode_cycles + instruction.cycles;
       },
@@ -474,29 +469,29 @@ impl CPU {
         if instruction.addr_mode == AddressingMode::Implied {
           self.r_a = (shifted & 0x00FF) as u8;
         } else {
-          self.write(self.location, (shifted & 0x00FF) as u8);
+          bus.write(self.location, (shifted & 0x00FF) as u8);
         }
 
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::RTI => {
         self.sp += 1;
-        self.r_status = self.read(0x0100 + self.sp as u16);
+        self.r_status = bus.read(0x0100 + self.sp as u16);
         self.r_status &= ((!self.f_b) as u8) << 4;
         self.r_status &= ((!self.f_u) as u8) << 5;
 
         self.sp += 1;
-        self.pc = self.read(self.sp as u16 + 0x100) as u16;
+        self.pc = bus.read(self.sp as u16 + 0x100) as u16;
         self.sp += 1;
-        self.pc |= (self.read(self.sp as u16 + 0x100) as u16) << 8;
+        self.pc |= (bus.read(self.sp as u16 + 0x100) as u16) << 8;
 
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::RTS => {
         self.sp += 1;
-        self.pc = self.read(self.sp as u16 + 0x100) as u16;
+        self.pc = bus.read(self.sp as u16 + 0x100) as u16;
         self.sp += 1;
-        self.pc |= (self.read(self.sp as u16 + 0x100) as u16) << 8;
+        self.pc |= (bus.read(self.sp as u16 + 0x100) as u16) << 8;
 
         self.pc += 1;
         return address_mode_cycles + instruction.cycles;
@@ -514,15 +509,15 @@ impl CPU {
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::STA => {
-        self.write(self.location, self.r_a);
+        bus.write(self.location, self.r_a);
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::STX => {
-        self.write(self.location, self.r_x);
+        bus.write(self.location, self.r_x);
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::STY => {
-        self.write(self.location, self.r_y);
+        bus.write(self.location, self.r_y);
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::TAX => {
@@ -565,7 +560,7 @@ impl CPU {
     }
   }
 
-  fn load_address_mode(&mut self, addr_mode: &AddressingMode) -> u8 {
+  fn load_address_mode(&mut self, addr_mode: &AddressingMode, bus: &Bus) -> u8 {
     match addr_mode {
       AddressingMode::Implied => {
         return 0
@@ -576,25 +571,25 @@ impl CPU {
         return 0;
       },
       AddressingMode::ZeroPage => {
-        let msb = self.read(self.pc);
+        let msb = bus.read(self.pc);
         self.pc += 1;
         self.location = msb as u16 & 0x00FF;
         return 0;
       },
       AddressingMode::ZeroPageX => {
-        let msb = self.read(self.pc + self.r_x as u16);
+        let msb = bus.read(self.pc + self.r_x as u16);
         self.pc += 1;
         self.location = msb as u16 & 0x00FF;
         return 0;
       },
       AddressingMode::ZeroPageY => {
-        let msb = self.read(self.pc + self.r_y as u16);
+        let msb = bus.read(self.pc + self.r_y as u16);
         self.pc += 1;
         self.location = msb as u16 & 0x00FF;
         return 0;
       },
       AddressingMode::Relative => {
-        self.relative_location = self.read(self.pc) as u16;
+        self.relative_location = bus.read(self.pc) as u16;
         self.pc += 1;
         if (self.relative_location & 0x80) != 0x0000 {
           self.relative_location |= 0xFF00;
@@ -602,17 +597,17 @@ impl CPU {
         return 0;
       },
       AddressingMode::Absolute => {
-        let lo = self.read(self.pc) as u16;
+        let lo = bus.read(self.pc) as u16;
         self.pc += 1;
-        let hi = self.read(self.pc) as u16;
+        let hi = bus.read(self.pc) as u16;
         self.pc += 1;
         self.location = (hi << 8) | lo;
         return 0;
       },
       AddressingMode::AbsoluteX => {
-        let lo = self.read(self.pc) as u16;
+        let lo = bus.read(self.pc) as u16;
         self.pc += 1;
-        let hi = self.read(self.pc) as u16;
+        let hi = bus.read(self.pc) as u16;
         self.pc += 1;
 
         self.location = (hi << 8) | lo;
@@ -625,9 +620,9 @@ impl CPU {
         }
       },
       AddressingMode::AbsoluteY => {
-        let lo = self.read(self.pc) as u16;
+        let lo = bus.read(self.pc) as u16;
         self.pc += 1;
-        let hi = self.read(self.pc) as u16;
+        let hi = bus.read(self.pc) as u16;
         self.pc += 1;
 
         self.location = (hi << 8) | lo;
@@ -640,38 +635,38 @@ impl CPU {
         }
       },
       AddressingMode::Indirect => {
-        let ptr_lo = self.read(self.pc) as u16;
+        let ptr_lo = bus.read(self.pc) as u16;
         self.pc += 1;
-        let ptr_hi = self.read(self.pc) as u16;
+        let ptr_hi = bus.read(self.pc) as u16;
         self.pc += 1;
 
         let ptr = (ptr_hi << 8) | ptr_lo;
 
         // Page boundary hardware bug simulation
         if ptr_lo == 0x00FF {
-          self.location = (self.read(ptr & 0xFF00) as u16) | self.read(ptr) as u16;
+          self.location = (bus.read(ptr & 0xFF00) as u16) | bus.read(ptr) as u16;
         } else {
-          self.location = ((self.read(ptr + 1) as u16) << 8) | self.read(ptr) as u16;
+          self.location = ((bus.read(ptr + 1) as u16) << 8) | bus.read(ptr) as u16;
         }
 
         return 0;
       },
       AddressingMode::IndirectX => {
-        let address = self.read(self.pc) as u16;
+        let address = bus.read(self.pc) as u16;
         self.pc += 1;
 
-        let lo = self.read((address + (self.r_x as u16)) & 0x00FF) as u16;
-        let hi = self.read((address + (self.r_x as u16) + 1) & 0x00FF) as u16;
+        let lo = bus.read((address + (self.r_x as u16)) & 0x00FF) as u16;
+        let hi = bus.read((address + (self.r_x as u16) + 1) & 0x00FF) as u16;
 
         self.location = (hi << 8) | lo;
         return 0;
       },
       AddressingMode::IndirectY => {
-        let address = self.read(self.pc) as u16;
+        let address = bus.read(self.pc) as u16;
         self.pc += 1;
 
-        let lo = self.read(address & 0x00FF) as u16;
-        let hi = self.read((address + 0x0001) & 0x00FF) as u16;
+        let lo = bus.read(address & 0x00FF) as u16;
+        let hi = bus.read((address + 0x0001) & 0x00FF) as u16;
 
         self.location = (hi << 8) | lo;
         self.location += self.r_y as u16;
