@@ -5,20 +5,22 @@ use clap::Clap;
 use std::time::Instant;
 use crate::emu::nes::NES;
 use crate::emu::bus::Bus;
+use crate::emu::cartridge::Cartridge;
 
 #[derive(Clap)]
 struct Opts {
-  #[clap(long, parse(try_from_str), default_value = "false")]
-  pub debug_interface: bool,
+  #[clap(short, long)]
+  pub rom_path: String
 }
 
 fn main() {
+  let opts = Opts::parse();
   let mut nes = NES::new();
 
   let cycle_count = 100_000_000;
   let mut cycles = 0;
 
-  let mut bus = Bus::new();
+  let mut bus = Bus::new(Cartridge::load(&opts.rom_path.as_str()).unwrap());
   bus.ram[0x0000] = 0x69;
   bus.ram[0x0001] = 0x24;
   bus.ram[0x0002] = 0x69;

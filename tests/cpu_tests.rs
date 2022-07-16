@@ -3,6 +3,7 @@ extern crate nes_emu;
 
 mod cpu_tests {
   use nes_emu::emu;
+  use nes_emu::emu::cartridge::Cartridge;
 
   fn run_cpu_cycles(cpu: &mut emu::cpu::CPU, cycles: u32, bus: &mut emu::bus::Bus) {
     for _x in 0..cycles {
@@ -13,7 +14,7 @@ mod cpu_tests {
   #[test]
   fn adc_imm_test() {
     let mut cpu = emu::cpu::CPU::new();
-    let mut bus = emu::bus::Bus::new();
+    let mut bus = emu::bus::Bus::new(Cartridge::load("./ROMS/snake.nes").unwrap());
     bus.write(0x0000, 0x69);
     bus.write(0x0001, 0x24);
     bus.write(0x0002, 0x69);
@@ -25,7 +26,7 @@ mod cpu_tests {
   #[test]
   fn adc_abs_test() {
     let mut cpu = emu::cpu::CPU::new();
-    let mut bus = emu::bus::Bus::new();
+    let mut bus = emu::bus::Bus::new(Cartridge::load("./ROMS/snake.nes").unwrap());
     bus.write(0x0000, 0x6D);
     bus.write(0x0001, 0x00);
     bus.write(0x0002, 0x04);
@@ -44,7 +45,7 @@ mod cpu_tests {
   #[test]
   fn sbc_imm_test() {
     let mut cpu = emu::cpu::CPU::new();
-    let mut bus = emu::bus::Bus::new();
+    let mut bus = emu::bus::Bus::new(Cartridge::load("./ROMS/snake.nes").unwrap());
     cpu.r_a = 0x69;
     bus.write(0x0000, 0xE9);
     bus.write(0x0001, 0x42);
