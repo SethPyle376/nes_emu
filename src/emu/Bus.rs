@@ -9,6 +9,9 @@ const RAM_END: u16 = 0x1FFF;
 const PPU_REGISTER_BEGIN: u16 = 0x2000;
 const PPU_REGISTER_END: u16 = 0x3FFF;
 
+const PRG_ROM_BEGIN: u16 = 0x8000;
+const PRG_ROM_END: u16 = 0xFFFF;
+
 pub struct Bus {
   pub ram: Vec<u8>,
   pub ppu: PPU,
@@ -35,6 +38,15 @@ impl Bus {
       PPU_REGISTER_BEGIN ..= PPU_REGISTER_END => {
         todo!("PPU REGISTER READS NOT YET SUPPORTED");
       }
+      PRG_ROM_BEGIN ..= PRG_ROM_END => {
+        let mut rom_location = addr - 0x8000;
+        
+        if self.cartridge.prg_rom.len() == 0x4000 {
+          rom_location = rom_location % 0x4000;
+        }
+
+        return self.cartridge.prg_rom[rom_location as usize];
+      }
       _ => {
         println!("IGNORING MEMORY READ AT ADDRESS {}", addr);
         return 0;
@@ -43,8 +55,19 @@ impl Bus {
   }
 
   pub fn write(&mut self, addr: u16, value: u8) {
-    if addr < 0x2000 {
-      self.ram[usize::from(addr & 0x7FF)] = value;
+    match addr {
+      RAM_BEGIN ..= RAM_END => {
+        self.ram[usize::from(addr & 0x7FF)] = value;
+      }
+      PPU_REGISTER_BEGIN ..= PPU_REGISTER_END => {
+        todo!("PPU REGISTER READS NOT YET SUPPORTED");
+      }
+      PRG_ROM_BEGIN ..= PRG_ROM_END => {
+        panic!("WRITE TO PRG ROM ATTEMPTED");
+      }
+      _ => {
+        println!("IGNORING MEMORY WRITE AT ADDRESS {}", addr);
+      }
     }
   }
 }

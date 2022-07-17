@@ -145,6 +145,11 @@ impl CPU {
     // Get instruction from next program counter target
     let op_byte = bus.read(self.pc);
     let instruction = Instruction::from_u8(op_byte);
+
+    if instruction.opcode == Opcode::UnknownOperation {
+      panic!("UNKNOWN CPU OPERATION {}", op_byte);
+    }
+
     self.pc += 1;
 
     // Execute instruction
