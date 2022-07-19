@@ -22,7 +22,7 @@ impl Bus {
   pub fn new(cartridge: Cartridge) -> Bus {
     let mut bus = Bus {
       ram: Vec::with_capacity(0x800),
-      ppu: PPU::new(),
+      ppu: PPU::new(cartridge.chr_rom.clone(), cartridge.mirroring),
       cartridge
     };
     bus.ram.resize(0x800, 0x00);

@@ -1,16 +1,13 @@
 use crate::emu::cpu::CPU;
-use crate::emu::ppu::PPU;
 
 pub struct NES {
-  pub cpu: CPU,
-  pub ppu: PPU
+  pub cpu: CPU
 }
 
 impl NES {
   pub fn new() -> NES {
     NES {
-      cpu: CPU::new(),
-      ppu: PPU::new()
+      cpu: CPU::new()
     }
   }
 }

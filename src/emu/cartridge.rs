@@ -3,6 +3,7 @@ const HEADER_LENGTH: usize = 16;
 const PRG_ROM_PAGE_SIZE: usize = 16384;
 const CHR_ROM_PAGE_SIZE: usize = 8192;
 
+#[derive(Clone, Copy)]
 pub enum Mirroring {
   Vertical,
   Horizontal,
