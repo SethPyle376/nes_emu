@@ -1,4 +1,6 @@
-#[derive(Copy, Clone, PartialEq)]
+use strum_macros::Display;
+
+#[derive(Copy, Clone, PartialEq, strum_macros::Display)]
 pub enum Opcode {
   BRK,
   ORA,

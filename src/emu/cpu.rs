@@ -30,11 +30,13 @@ pub struct CPU {
   pub f_u: bool,
 
   pub location: u16,
-  pub relative_location: u16
+  pub relative_location: u16,
+
+  trace_file: Option<String>
 }
 
 impl CPU {
-  pub fn new() -> CPU {
+  pub fn new(trace_file: Option<String>) -> CPU {
     CPU {
       sp: 0x00,
       r_a: 0x00,
@@ -53,11 +55,12 @@ impl CPU {
       f_b: false,
       f_u: false,
       location: 0x0000,
-      relative_location: 0x0000
+      relative_location: 0x0000,
+      trace_file
     }
   }
 
-  pub fn reset(&mut self, bus: &Bus) {
+  pub fn reset(&mut self, bus: &mut Bus) {
     self.r_a = 0x00;
     self.r_x = 0x00;
     self.r_y = 0x00;
@@ -150,18 +153,18 @@ impl CPU {
       panic!("UNKNOWN CPU OPERATION {}", op_byte);
     }
 
+    if self.trace_file.is_some() {
+      self.trace(bus);
+    }
+
     self.pc += 1;
 
     // Execute instruction
     let wait_cycles = self.execute_instruction(&instruction, bus);
-    self.skip_cycles = wait_cycles;
-
-    if self.skip_cycles > 0 {
-      self.skip_cycles -= 1;
-    }
+    self.skip_cycles = wait_cycles - 1;
   }
   
-  pub fn read(&self, addr: u16, bus: &Bus) -> u8 {
+  pub fn read(&self, addr: u16, bus: &mut Bus) -> u8 {
     bus.read(addr)
   }
   
@@ -186,7 +189,7 @@ impl CPU {
         self.f_v = (!((self.r_a as u16) ^ op_data as u16) & ((self.r_a as u16) ^ sum) & 0x0080) != 0;
         self.f_n = sum & 0x80 != 0;
         self.r_a = (sum & 0x00FF) as u8;
-        return address_mode_cycles + instruction.cycles + 1;
+        return address_mode_cycles + instruction.cycles;
       },
       Opcode::SBC => {
         let inverted = (op_data as u16) ^ 0x00FF;
@@ -197,20 +200,20 @@ impl CPU {
         self.f_v = ((difference ^ self.r_a as u16) & (difference ^ inverted) & 0x0080) != 0;
         self.f_n = difference & 0x0080 != 0;
         self.r_a = (difference & 0x00FF) as u8;
-        return address_mode_cycles + instruction.cycles + 1;
+        return address_mode_cycles + instruction.cycles;
       },
       Opcode::AND => {
         self.r_a = self.r_a & op_data;
         self.f_z = self.r_a == 0x00;
         self.f_n = (self.r_a & 0x80) != 0;
-        return address_mode_cycles + instruction.cycles + 1;
+        return address_mode_cycles + instruction.cycles;
       },
       Opcode::ASL => {
         let shifted = (op_data as u16) << 1;
         self.f_c = (shifted & 0xFF00) != 0;
         self.f_z = (shifted & 0x00FF) == 0x00;
         self.f_n = (shifted & 0x80) != 0;
-        return address_mode_cycles + instruction.cycles + 1;
+        return address_mode_cycles + instruction.cycles;
       },
       Opcode::BCC => {
         if self.f_c == false {
@@ -311,7 +314,7 @@ impl CPU {
         self.f_c = self.r_a >= op_data;
         self.f_z = (difference & 0x00FF) == 0;
         self.f_n = (difference & 0x800) != 0;
-        return address_mode_cycles + instruction.cycles + 1;
+        return address_mode_cycles + instruction.cycles;
       },
       Opcode::CPX => {
         let difference = self.r_x as u16 - op_data as u16;
@@ -350,7 +353,7 @@ impl CPU {
         self.r_a = self.r_a ^ op_data;
         self.f_z = self.r_a == 0;
         self.f_n = (self.r_a & 0x80) != 0;
-        return address_mode_cycles + instruction.cycles + 1;
+        return address_mode_cycles + instruction.cycles;
       },
       Opcode::INC => {
         let value = op_data + 1;
@@ -391,19 +394,19 @@ impl CPU {
         self.r_a = op_data;
         self.f_z = self.r_a == 0x00;
         self.f_n = (self.r_a & 0x80) != 0;
-        return address_mode_cycles + instruction.cycles + 1;
+        return address_mode_cycles + instruction.cycles;
       },
       Opcode::LDX => {
         self.r_x = op_data;
         self.f_z = self.r_x == 0x00;
         self.f_n = (self.r_x & 0x80) != 0;
-        return address_mode_cycles + instruction.cycles + 1;
+        return address_mode_cycles + instruction.cycles;
       },
       Opcode::LDY => {
         self.r_y = op_data;
         self.f_z = self.r_y == 0x00;
         self.f_n = (self.r_y & 0x80) != 0;
-        return address_mode_cycles + instruction.cycles + 1;
+        return address_mode_cycles + instruction.cycles;
       },
       Opcode::LSR => {
         self.f_c = (op_data & 0x0001) != 0;
@@ -425,7 +428,7 @@ impl CPU {
         self.r_a |= op_data;
         self.f_z = self.r_a == 0;
         self.f_n = (self.r_a & 0x80) != 0;
-        return address_mode_cycles + instruction.cycles + 1;
+        return address_mode_cycles + instruction.cycles;
       },
       Opcode::PHA => {
         bus.write(0x0100 + self.sp as u16, self.r_a);
@@ -565,7 +568,7 @@ impl CPU {
     }
   }
 
-  fn load_address_mode(&mut self, addr_mode: &AddressingMode, bus: &Bus) -> u8 {
+  fn load_address_mode(&mut self, addr_mode: &AddressingMode, bus: &mut Bus) -> u8 {
     match addr_mode {
       AddressingMode::Implied => {
         return 0
@@ -684,5 +687,12 @@ impl CPU {
       }
       _ => { return 0; }
     }
+  }
+
+  fn trace(&self, bus: &mut Bus) {
+    let instruction = Instruction::from_u8(bus.read(self.pc));
+
+    let instruction_string = format!("{:04x}  {: >4}", self.pc, instruction.opcode);
+    println!("{}", instruction_string);
   }
 }

@@ -1,6 +1,6 @@
 use super::cartridge::Mirroring;
 
-const VRAM_ADD_INCREMENT_BIT : u8 = 4;
+const VRAM_ADD_INCREMENT_BIT : u8 = 0b100;
 
 pub struct PPU {
   pub chr_rom: Vec<u8>,
@@ -39,9 +39,33 @@ impl PPU {
         self.byte_buffer = self.chr_rom[addr as usize];
         data
       },
-      0x2000 ..= 0x2FFF => todo!("read from ram"),
+      0x2000 ..= 0x2FFF => self.vram[self.mirror_addr(addr) as usize],
       0x3F00 ..= 0x3FFF => self.palette_table[addr as usize & 0xFF],
       _ => panic!("BAD MEMORY SPACE ACCESS")
+    }
+  }
+
+  pub fn write(&mut self, addr: u16, data: u8) {
+    match addr {
+      0x2016 => {
+        self.mem_addr_reg.write(data);
+      }
+      _ => panic!("BAD MEMORY SPACE WRITE")
+    }
+  }
+
+  fn mirror_addr(&self, addr: u16) -> u16 {
+    let vram_index = addr & 0xEFF;
+    let name_table_index = vram_index / 0x400;
+
+    if name_table_index == 0 || (self.mirroring == Mirroring::Vertical && name_table_index == 1) {
+      return vram_index;
+    } else if self.mirroring == Mirroring::Horizontal {
+      return vram_index - (0x400 + (name_table_index - 1) * 0x400);
+    } else if self.mirroring == Mirroring::Vertical {
+      return vram_index - 0x800;
+    } else {
+      panic!("FOUR SCREEN VRAM MIRRORING NOT SUPPORTED");
     }
   }
 

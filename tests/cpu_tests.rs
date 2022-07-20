@@ -13,7 +13,7 @@ mod cpu_tests {
 
   #[test]
   fn adc_imm_test() {
-    let mut cpu = emu::cpu::CPU::new();
+    let mut cpu = emu::cpu::CPU::new(None);
     let mut bus = emu::bus::Bus::new(Cartridge::load("./ROMS/snake.nes").unwrap());
     bus.write(0x0000, 0x69);
     bus.write(0x0001, 0x24);
@@ -25,7 +25,7 @@ mod cpu_tests {
 
   #[test]
   fn adc_abs_test() {
-    let mut cpu = emu::cpu::CPU::new();
+    let mut cpu = emu::cpu::CPU::new(None);
     let mut bus = emu::bus::Bus::new(Cartridge::load("./ROMS/snake.nes").unwrap());
     bus.write(0x0000, 0x6D);
     bus.write(0x0001, 0x00);
@@ -44,7 +44,7 @@ mod cpu_tests {
 
   #[test]
   fn sbc_imm_test() {
-    let mut cpu = emu::cpu::CPU::new();
+    let mut cpu = emu::cpu::CPU::new(None);
     let mut bus = emu::bus::Bus::new(Cartridge::load("./ROMS/snake.nes").unwrap());
     cpu.r_a = 0x69;
     bus.write(0x0000, 0xE9);

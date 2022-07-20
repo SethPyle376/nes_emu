@@ -7,7 +7,7 @@ pub struct NES {
 impl NES {
   pub fn new() -> NES {
     NES {
-      cpu: CPU::new()
+      cpu: CPU::new(None)
     }
   }
 }

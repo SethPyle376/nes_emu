@@ -9,6 +9,9 @@ const RAM_END: u16 = 0x1FFF;
 const PPU_REGISTER_BEGIN: u16 = 0x2000;
 const PPU_REGISTER_END: u16 = 0x3FFF;
 
+const PPU_MAP_ADDR: u16 = 0x2006;
+const PPU_MAP_READ: u16 = 0x2007;
+
 const PRG_ROM_BEGIN: u16 = 0x8000;
 const PRG_ROM_END: u16 = 0xFFFF;
 
@@ -29,14 +32,21 @@ impl Bus {
     return bus;
   }
 
-  pub fn read(&self, addr: u16) -> u8 {
+  pub fn read(&mut self, addr: u16) -> u8 {
     match addr {
       // Main RAM read
       RAM_BEGIN ..= RAM_END => {
         return self.ram[usize::from(addr & 0x7FF)];
       }
-      PPU_REGISTER_BEGIN ..= PPU_REGISTER_END => {
-        todo!("PPU REGISTER READS NOT YET SUPPORTED");
+      0x2000 | 0x2001 | 0x2003 | 0x2005 | 0x2006 | 0x4014 => {
+        panic!("ATTEMPTED TO READ WRITE ONLY PPU ADDRESS {}", addr);
+      }
+      PPU_MAP_READ => {
+        return self.ppu.read();
+      }
+      0x2008 ..= PPU_REGISTER_END => {
+        // Mirror down address to real PPU space
+        return self.read(addr & 0x2007);
       }
       PRG_ROM_BEGIN ..= PRG_ROM_END => {
         let mut rom_location = addr - 0x8000;
@@ -59,8 +69,12 @@ impl Bus {
       RAM_BEGIN ..= RAM_END => {
         self.ram[usize::from(addr & 0x7FF)] = value;
       }
-      PPU_REGISTER_BEGIN ..= PPU_REGISTER_END => {
-        todo!("PPU REGISTER READS NOT YET SUPPORTED");
+      PPU_MAP_ADDR => {
+        self.ppu.write(addr, value);
+      }
+      0x2008 ..= PPU_REGISTER_END => {
+        // Mirror down address to real PPU space
+        return self.write(addr & 0x2007, value);
       }
       PRG_ROM_BEGIN ..= PRG_ROM_END => {
         panic!("WRITE TO PRG ROM ATTEMPTED");

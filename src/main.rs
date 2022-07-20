@@ -1,9 +1,10 @@
 #![allow(dead_code)]
 mod emu;
+mod graphics;
 
 use clap::Clap;
 use std::time::Instant;
-use crate::emu::nes::NES;
+use crate::emu::cpu::CPU;
 use crate::emu::bus::Bus;
 use crate::emu::cartridge::Cartridge;
 
@@ -15,9 +16,9 @@ struct Opts {
 
 fn main() {
   let opts = Opts::parse();
-  let mut nes = NES::new();
+  let mut cpu = CPU::new(Some("blah".to_string()));
 
-  let cycle_count = 100_000_000;
+  let cycle_count = 100;
   let mut cycles = 0;
 
   let mut bus = Bus::new(Cartridge::load(&opts.rom_path.as_str()).unwrap());
@@ -31,7 +32,7 @@ fn main() {
 
   let start = Instant::now();
   while cycles < cycle_count {
-    nes.cpu.step(&mut bus);
+    cpu.step(&mut bus);
     cycles += 1;
   }
   let end = Instant::now();
