@@ -79,10 +79,13 @@ impl CPU {
 
     self.f_c = false;
     self.f_z = false;
-    self.f_i = false;
+    self.f_i = true;
     self.f_d = false;
     self.f_v = false;
     self.f_n = false;
+
+    self.f_u = true;
+    self.f_b = false;
 
     self.cycles = 0;
     self.skip_cycles = 8;
@@ -102,6 +105,7 @@ impl CPU {
     self.f_u = true;
     self.f_i = true;
 
+    self.update_status_register();
     bus.write(0x0100 + (self.sp as u16), self.r_status);
     self.sp -= 1;
 
@@ -125,6 +129,7 @@ impl CPU {
     self.f_u = true;
     self.f_i = true;
 
+    self.update_status_register();
     bus.write(0x0100 + (self.sp as u16), self.r_status);
     self.sp -= 1;
 
@@ -139,6 +144,7 @@ impl CPU {
   }
 
   pub fn step(&mut self, bus: &mut Bus) {
+    self.update_status_register();
     self.cycles += 1;
     if self.skip_cycles > 0 {
       self.skip_cycles -= 1;
@@ -272,9 +278,11 @@ impl CPU {
         self.sp -= 1;
 
         self.f_b = true;
+        self.update_status_register();
         bus.write(0x0100 + self.sp as u16, self.r_status);
         self.sp -= 1;
         self.f_b = false;
+        self.update_status_register();
 
         self.pc = bus.read(0xFFFE) as u16 | bus.read(0xFFFF) as u16;
         return address_mode_cycles + instruction.cycles;
@@ -436,10 +444,11 @@ impl CPU {
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::PHP => {
-        let stored_status = self.r_status | (self.f_b as u8) << 4 | (self.f_u as u8) << 5;
+        let stored_status = self.r_status;
         bus.write(0x0100 + self.sp as u16, stored_status);
+        self.sp -= 1;
         self.f_b = false;
-        self.f_u = false;
+        self.f_u = true;
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::PLA => {
@@ -451,8 +460,9 @@ impl CPU {
       },
       Opcode::PLP => {
         self.sp += 1;
-        self.r_status = bus.read(0x100 + self.sp as u16);
+        self.set_status_register(bus.read(0x100 + self.sp as u16));
         self.f_u = true;
+        self.f_b = false;
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::ROL => {
@@ -714,5 +724,52 @@ impl CPU {
       instruction_string, self.r_a, self.r_x, self.r_y, self.r_status, self.sp).to_ascii_uppercase();
 
     println!("{}", trace_string);
+  }
+
+  fn update_status_register(&mut self) {
+    self.r_status = 0;
+
+    if self.f_n {
+      self.r_status |= 0x01 << 7;
+    }
+
+    if self.f_v {
+      self.r_status |= 0x01 << 6;
+    }
+
+    if self.f_u {
+      self.r_status |= 0x01 << 5;
+    }
+
+    if self.f_b {
+      self.r_status |= 0x01 << 4;
+    }
+
+    if self.f_d {
+      self.r_status |= 0x01 << 3;
+    }
+
+    if self.f_i {
+      self.r_status |= 0x01 << 2;
+    }
+
+    if self.f_z {
+      self.r_status |= 0x01 << 1;
+    }
+
+    if self.f_c {
+      self.r_status |= 0x01;
+    }
+  }
+
+  fn set_status_register(&mut self, status: u8) {
+    self.f_n = (status & (0x01 << 7)) != 0;
+    self.f_v = (status & (0x01 << 6)) != 0;
+    self.f_u = (status & (0x01 << 5)) != 0;
+    self.f_b = (status & (0x01 << 4)) != 0;
+    self.f_d = (status & (0x01 << 3)) != 0;
+    self.f_i = (status & (0x01 << 2)) != 0;
+    self.f_z = (status & (0x01 << 1)) != 0;
+    self.f_c = (status & (0x01)) != 0;
   }
 }
