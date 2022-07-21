@@ -690,9 +690,29 @@ impl CPU {
   }
 
   fn trace(&self, bus: &mut Bus) {
-    let instruction = Instruction::from_u8(bus.read(self.pc));
+    let opcode = bus.read(self.pc);
+    let instruction = Instruction::from_u8(opcode);
 
-    let instruction_string = format!("{:04x}  {: >4}", self.pc, instruction.opcode);
-    println!("{}", instruction_string);
+    let mut instruction_bytes = vec![opcode];
+
+    match instruction.addr_mode {
+      AddressingMode::Immediate | AddressingMode::ZeroPage | AddressingMode::ZeroPageX | AddressingMode::ZeroPageY
+        | AddressingMode::IndirectX | AddressingMode::IndirectY | AddressingMode::Relative => {
+        instruction_bytes.push(bus.read(self.pc + 1));
+      }
+      AddressingMode::Absolute | AddressingMode::AbsoluteX | AddressingMode::AbsoluteY | AddressingMode::Indirect => {
+        instruction_bytes.push(bus.read(self.pc + 1));
+        instruction_bytes.push(bus.read(self.pc + 2));
+      }
+      _ => {}
+    };
+
+    let byte_str = instruction_bytes.iter().map(|byte| format!("{:02x}", byte)).collect::<Vec<String>>().join(" ");
+    let instruction_string = format!("{:04x}  {:8} {: >4}", self.pc, byte_str, instruction.opcode);
+
+    let trace_string = format!("{:47} A:{:02x} X:{:02x} Y:{:02x} P:{:02x} SP:{:02x}", 
+      instruction_string, self.r_a, self.r_x, self.r_y, self.r_status, self.sp).to_ascii_uppercase();
+
+    println!("{}", trace_string);
   }
 }

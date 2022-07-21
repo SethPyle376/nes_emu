@@ -1,0 +1,1000 @@
+C000  4C F5 C5                                  A:00 X:00 Y:00 P:24
+C5F5  A2 00                                     A:00 X:00 Y:00 P:24
+C5F7  86 00                                     A:00 X:00 Y:00 P:26
+C5F9  86 10                                     A:00 X:00 Y:00 P:26
+C5FB  86 11                                     A:00 X:00 Y:00 P:26
+C5FD  20 2D C7                                  A:00 X:00 Y:00 P:26
+C72D  EA                                        A:00 X:00 Y:00 P:26
+C72E  38                                        A:00 X:00 Y:00 P:26
+C72F  B0 04                                     A:00 X:00 Y:00 P:27
+C735  EA                                        A:00 X:00 Y:00 P:27
+C736  18                                        A:00 X:00 Y:00 P:27
+C737  B0 03                                     A:00 X:00 Y:00 P:26
+C739  4C 40 C7                                  A:00 X:00 Y:00 P:26
+C740  EA                                        A:00 X:00 Y:00 P:26
+C741  38                                        A:00 X:00 Y:00 P:26
+C742  90 03                                     A:00 X:00 Y:00 P:27
+C744  4C 4B C7                                  A:00 X:00 Y:00 P:27
+C74B  EA                                        A:00 X:00 Y:00 P:27
+C74C  18                                        A:00 X:00 Y:00 P:27
+C74D  90 04                                     A:00 X:00 Y:00 P:26
+C753  EA                                        A:00 X:00 Y:00 P:26
+C754  A9 00                                     A:00 X:00 Y:00 P:26
+C756  F0 04                                     A:00 X:00 Y:00 P:26
+C75C  EA                                        A:00 X:00 Y:00 P:26
+C75D  A9 40                                     A:00 X:00 Y:00 P:26
+C75F  F0 03                                     A:40 X:00 Y:00 P:24
+C761  4C 68 C7                                  A:40 X:00 Y:00 P:24
+C768  EA                                        A:40 X:00 Y:00 P:24
+C769  A9 40                                     A:40 X:00 Y:00 P:24
+C76B  D0 04                                     A:40 X:00 Y:00 P:24
+C771  EA                                        A:40 X:00 Y:00 P:24
+C772  A9 00                                     A:40 X:00 Y:00 P:24
+C774  D0 03                                     A:00 X:00 Y:00 P:26
+C776  4C 7D C7                                  A:00 X:00 Y:00 P:26
+C77D  EA                                        A:00 X:00 Y:00 P:26
+C77E  A9 FF                                     A:00 X:00 Y:00 P:26
+C780  85 01                                     A:FF X:00 Y:00 P:A4
+C782  24 01                                     A:FF X:00 Y:00 P:A4
+C784  70 04                                     A:FF X:00 Y:00 P:E4
+C78A  EA                                        A:FF X:00 Y:00 P:E4
+C78B  24 01                                     A:FF X:00 Y:00 P:E4
+C78D  50 03                                     A:FF X:00 Y:00 P:E4
+C78F  4C 96 C7                                  A:FF X:00 Y:00 P:E4
+C796  EA                                        A:FF X:00 Y:00 P:E4
+C797  A9 00                                     A:FF X:00 Y:00 P:E4
+C799  85 01                                     A:00 X:00 Y:00 P:66
+C79B  24 01                                     A:00 X:00 Y:00 P:66
+C79D  50 04                                     A:00 X:00 Y:00 P:26
+C7A3  EA                                        A:00 X:00 Y:00 P:26
+C7A4  24 01                                     A:00 X:00 Y:00 P:26
+C7A6  70 03                                     A:00 X:00 Y:00 P:26
+C7A8  4C AF C7                                  A:00 X:00 Y:00 P:26
+C7AF  EA                                        A:00 X:00 Y:00 P:26
+C7B0  A9 00                                     A:00 X:00 Y:00 P:26
+C7B2  10 04                                     A:00 X:00 Y:00 P:26
+C7B8  EA                                        A:00 X:00 Y:00 P:26
+C7B9  A9 80                                     A:00 X:00 Y:00 P:26
+C7BB  10 03                                     A:80 X:00 Y:00 P:A4
+C7BD  4C D9 C7                                  A:80 X:00 Y:00 P:A4
+C7D9  EA                                        A:80 X:00 Y:00 P:A4
+C7DA  60                                        A:80 X:00 Y:00 P:A4
+C600  20 DB C7                                  A:80 X:00 Y:00 P:A4
+C7DB  EA                                        A:80 X:00 Y:00 P:A4
+C7DC  A9 FF                                     A:80 X:00 Y:00 P:A4
+C7DE  85 01                                     A:FF X:00 Y:00 P:A4
+C7E0  24 01                                     A:FF X:00 Y:00 P:A4
+C7E2  A9 00                                     A:FF X:00 Y:00 P:E4
+C7E4  38                                        A:00 X:00 Y:00 P:66
+C7E5  78                                        A:00 X:00 Y:00 P:67
+C7E6  F8                                        A:00 X:00 Y:00 P:67
+C7E7  08                                        A:00 X:00 Y:00 P:6F
+C7E8  68                                        A:00 X:00 Y:00 P:6F
+C7E9  29 EF                                     A:7F X:00 Y:00 P:6D
+C7EB  C9 6F                                     A:6F X:00 Y:00 P:6D
+C7ED  F0 04                                     A:6F X:00 Y:00 P:6F
+C7F3  EA                                        A:6F X:00 Y:00 P:6F
+C7F4  A9 40                                     A:6F X:00 Y:00 P:6F
+C7F6  85 01                                     A:40 X:00 Y:00 P:6D
+C7F8  24 01                                     A:40 X:00 Y:00 P:6D
+C7FA  D8                                        A:40 X:00 Y:00 P:6D
+C7FB  A9 10                                     A:40 X:00 Y:00 P:65
+C7FD  18                                        A:10 X:00 Y:00 P:65
+C7FE  08                                        A:10 X:00 Y:00 P:64
+C7FF  68                                        A:10 X:00 Y:00 P:64
+C800  29 EF                                     A:74 X:00 Y:00 P:64
+C802  C9 64                                     A:64 X:00 Y:00 P:64
+C804  F0 04                                     A:64 X:00 Y:00 P:67
+C80A  EA                                        A:64 X:00 Y:00 P:67
+C80B  A9 80                                     A:64 X:00 Y:00 P:67
+C80D  85 01                                     A:80 X:00 Y:00 P:E5
+C80F  24 01                                     A:80 X:00 Y:00 P:E5
+C811  F8                                        A:80 X:00 Y:00 P:A5
+C812  A9 00                                     A:80 X:00 Y:00 P:AD
+C814  38                                        A:00 X:00 Y:00 P:2F
+C815  08                                        A:00 X:00 Y:00 P:2F
+C816  68                                        A:00 X:00 Y:00 P:2F
+C817  29 EF                                     A:3F X:00 Y:00 P:2D
+C819  C9 2F                                     A:2F X:00 Y:00 P:2D
+C81B  F0 04                                     A:2F X:00 Y:00 P:2F
+C821  EA                                        A:2F X:00 Y:00 P:2F
+C822  A9 FF                                     A:2F X:00 Y:00 P:2F
+C824  48                                        A:FF X:00 Y:00 P:AD
+C825  28                                        A:FF X:00 Y:00 P:AD
+C826  D0 09                                     A:FF X:00 Y:00 P:EF
+C828  10 07                                     A:FF X:00 Y:00 P:EF
+C82A  50 05                                     A:FF X:00 Y:00 P:EF
+C82C  90 03                                     A:FF X:00 Y:00 P:EF
+C82E  4C 35 C8                                  A:FF X:00 Y:00 P:EF
+C835  EA                                        A:FF X:00 Y:00 P:EF
+C836  A9 04                                     A:FF X:00 Y:00 P:EF
+C838  48                                        A:04 X:00 Y:00 P:6D
+C839  28                                        A:04 X:00 Y:00 P:6D
+C83A  F0 09                                     A:04 X:00 Y:00 P:24
+C83C  30 07                                     A:04 X:00 Y:00 P:24
+C83E  70 05                                     A:04 X:00 Y:00 P:24
+C840  B0 03                                     A:04 X:00 Y:00 P:24
+C842  4C 49 C8                                  A:04 X:00 Y:00 P:24
+C849  EA                                        A:04 X:00 Y:00 P:24
+C84A  F8                                        A:04 X:00 Y:00 P:24
+C84B  A9 FF                                     A:04 X:00 Y:00 P:2C
+C84D  85 01                                     A:FF X:00 Y:00 P:AC
+C84F  24 01                                     A:FF X:00 Y:00 P:AC
+C851  18                                        A:FF X:00 Y:00 P:EC
+C852  A9 00                                     A:FF X:00 Y:00 P:EC
+C854  48                                        A:00 X:00 Y:00 P:6E
+C855  A9 FF                                     A:00 X:00 Y:00 P:6E
+C857  68                                        A:FF X:00 Y:00 P:EC
+C858  D0 09                                     A:00 X:00 Y:00 P:6E
+C85A  30 07                                     A:00 X:00 Y:00 P:6E
+C85C  50 05                                     A:00 X:00 Y:00 P:6E
+C85E  B0 03                                     A:00 X:00 Y:00 P:6E
+C860  4C 67 C8                                  A:00 X:00 Y:00 P:6E
+C867  EA                                        A:00 X:00 Y:00 P:6E
+C868  A9 00                                     A:00 X:00 Y:00 P:6E
+C86A  85 01                                     A:00 X:00 Y:00 P:6E
+C86C  24 01                                     A:00 X:00 Y:00 P:6E
+C86E  38                                        A:00 X:00 Y:00 P:2E
+C86F  A9 FF                                     A:00 X:00 Y:00 P:2F
+C871  48                                        A:FF X:00 Y:00 P:AD
+C872  A9 00                                     A:FF X:00 Y:00 P:AD
+C874  68                                        A:00 X:00 Y:00 P:2F
+C875  F0 09                                     A:FF X:00 Y:00 P:AD
+C877  10 07                                     A:FF X:00 Y:00 P:AD
+C879  70 05                                     A:FF X:00 Y:00 P:AD
+C87B  90 03                                     A:FF X:00 Y:00 P:AD
+C87D  4C 84 C8                                  A:FF X:00 Y:00 P:AD
+C884  60                                        A:FF X:00 Y:00 P:AD
+C603  20 85 C8                                  A:FF X:00 Y:00 P:AD
+C885  EA                                        A:FF X:00 Y:00 P:AD
+C886  18                                        A:FF X:00 Y:00 P:AD
+C887  A9 FF                                     A:FF X:00 Y:00 P:AC
+C889  85 01                                     A:FF X:00 Y:00 P:AC
+C88B  24 01                                     A:FF X:00 Y:00 P:AC
+C88D  A9 55                                     A:FF X:00 Y:00 P:EC
+C88F  09 AA                                     A:55 X:00 Y:00 P:6C
+C891  B0 0B                                     A:FF X:00 Y:00 P:EC
+C893  10 09                                     A:FF X:00 Y:00 P:EC
+C895  C9 FF                                     A:FF X:00 Y:00 P:EC
+C897  D0 05                                     A:FF X:00 Y:00 P:6F
+C899  50 03                                     A:FF X:00 Y:00 P:6F
+C89B  4C A2 C8                                  A:FF X:00 Y:00 P:6F
+C8A2  EA                                        A:FF X:00 Y:00 P:6F
+C8A3  38                                        A:FF X:00 Y:00 P:6F
+C8A4  B8                                        A:FF X:00 Y:00 P:6F
+C8A5  A9 00                                     A:FF X:00 Y:00 P:2F
+C8A7  09 00                                     A:00 X:00 Y:00 P:2F
+C8A9  D0 09                                     A:00 X:00 Y:00 P:2F
+C8AB  70 07                                     A:00 X:00 Y:00 P:2F
+C8AD  90 05                                     A:00 X:00 Y:00 P:2F
+C8AF  30 03                                     A:00 X:00 Y:00 P:2F
+C8B1  4C B8 C8                                  A:00 X:00 Y:00 P:2F
+C8B8  EA                                        A:00 X:00 Y:00 P:2F
+C8B9  18                                        A:00 X:00 Y:00 P:2F
+C8BA  24 01                                     A:00 X:00 Y:00 P:2E
+C8BC  A9 55                                     A:00 X:00 Y:00 P:EE
+C8BE  29 AA                                     A:55 X:00 Y:00 P:6C
+C8C0  D0 09                                     A:00 X:00 Y:00 P:6E
+C8C2  50 07                                     A:00 X:00 Y:00 P:6E
+C8C4  B0 05                                     A:00 X:00 Y:00 P:6E
+C8C6  30 03                                     A:00 X:00 Y:00 P:6E
+C8C8  4C CF C8                                  A:00 X:00 Y:00 P:6E
+C8CF  EA                                        A:00 X:00 Y:00 P:6E
+C8D0  38                                        A:00 X:00 Y:00 P:6E
+C8D1  B8                                        A:00 X:00 Y:00 P:6F
+C8D2  A9 F8                                     A:00 X:00 Y:00 P:2F
+C8D4  29 EF                                     A:F8 X:00 Y:00 P:AD
+C8D6  90 0B                                     A:E8 X:00 Y:00 P:AD
+C8D8  10 09                                     A:E8 X:00 Y:00 P:AD
+C8DA  C9 E8                                     A:E8 X:00 Y:00 P:AD
+C8DC  D0 05                                     A:E8 X:00 Y:00 P:2F
+C8DE  70 03                                     A:E8 X:00 Y:00 P:2F
+C8E0  4C E7 C8                                  A:E8 X:00 Y:00 P:2F
+C8E7  EA                                        A:E8 X:00 Y:00 P:2F
+C8E8  18                                        A:E8 X:00 Y:00 P:2F
+C8E9  24 01                                     A:E8 X:00 Y:00 P:2E
+C8EB  A9 5F                                     A:E8 X:00 Y:00 P:EC
+C8ED  49 AA                                     A:5F X:00 Y:00 P:6C
+C8EF  B0 0B                                     A:F5 X:00 Y:00 P:EC
+C8F1  10 09                                     A:F5 X:00 Y:00 P:EC
+C8F3  C9 F5                                     A:F5 X:00 Y:00 P:EC
+C8F5  D0 05                                     A:F5 X:00 Y:00 P:6F
+C8F7  50 03                                     A:F5 X:00 Y:00 P:6F
+C8F9  4C 00 C9                                  A:F5 X:00 Y:00 P:6F
+C900  EA                                        A:F5 X:00 Y:00 P:6F
+C901  38                                        A:F5 X:00 Y:00 P:6F
+C902  B8                                        A:F5 X:00 Y:00 P:6F
+C903  A9 70                                     A:F5 X:00 Y:00 P:2F
+C905  49 70                                     A:70 X:00 Y:00 P:2D
+C907  D0 09                                     A:00 X:00 Y:00 P:2F
+C909  70 07                                     A:00 X:00 Y:00 P:2F
+C90B  90 05                                     A:00 X:00 Y:00 P:2F
+C90D  30 03                                     A:00 X:00 Y:00 P:2F
+C90F  4C 16 C9                                  A:00 X:00 Y:00 P:2F
+C916  EA                                        A:00 X:00 Y:00 P:2F
+C917  18                                        A:00 X:00 Y:00 P:2F
+C918  24 01                                     A:00 X:00 Y:00 P:2E
+C91A  A9 00                                     A:00 X:00 Y:00 P:EE
+C91C  69 69                                     A:00 X:00 Y:00 P:6E
+C91E  30 0B                                     A:69 X:00 Y:00 P:2C
+C920  B0 09                                     A:69 X:00 Y:00 P:2C
+C922  C9 69                                     A:69 X:00 Y:00 P:2C
+C924  D0 05                                     A:69 X:00 Y:00 P:2F
+C926  70 03                                     A:69 X:00 Y:00 P:2F
+C928  4C 2F C9                                  A:69 X:00 Y:00 P:2F
+C92F  EA                                        A:69 X:00 Y:00 P:2F
+C930  38                                        A:69 X:00 Y:00 P:2F
+C931  F8                                        A:69 X:00 Y:00 P:2F
+C932  24 01                                     A:69 X:00 Y:00 P:2F
+C934  A9 01                                     A:69 X:00 Y:00 P:ED
+C936  69 69                                     A:01 X:00 Y:00 P:6D
+C938  30 0B                                     A:6B X:00 Y:00 P:2C
+C93A  B0 09                                     A:6B X:00 Y:00 P:2C
+C93C  C9 6B                                     A:6B X:00 Y:00 P:2C
+C93E  D0 05                                     A:6B X:00 Y:00 P:2F
+C940  70 03                                     A:6B X:00 Y:00 P:2F
+C942  4C 49 C9                                  A:6B X:00 Y:00 P:2F
+C949  EA                                        A:6B X:00 Y:00 P:2F
+C94A  D8                                        A:6B X:00 Y:00 P:2F
+C94B  38                                        A:6B X:00 Y:00 P:27
+C94C  B8                                        A:6B X:00 Y:00 P:27
+C94D  A9 7F                                     A:6B X:00 Y:00 P:27
+C94F  69 7F                                     A:7F X:00 Y:00 P:25
+C951  10 0B                                     A:FF X:00 Y:00 P:E4
+C953  B0 09                                     A:FF X:00 Y:00 P:E4
+C955  C9 FF                                     A:FF X:00 Y:00 P:E4
+C957  D0 05                                     A:FF X:00 Y:00 P:67
+C959  50 03                                     A:FF X:00 Y:00 P:67
+C95B  4C 62 C9                                  A:FF X:00 Y:00 P:67
+C962  EA                                        A:FF X:00 Y:00 P:67
+C963  18                                        A:FF X:00 Y:00 P:67
+C964  24 01                                     A:FF X:00 Y:00 P:66
+C966  A9 7F                                     A:FF X:00 Y:00 P:E4
+C968  69 80                                     A:7F X:00 Y:00 P:64
+C96A  10 0B                                     A:FF X:00 Y:00 P:A4
+C96C  B0 09                                     A:FF X:00 Y:00 P:A4
+C96E  C9 FF                                     A:FF X:00 Y:00 P:A4
+C970  D0 05                                     A:FF X:00 Y:00 P:27
+C972  70 03                                     A:FF X:00 Y:00 P:27
+C974  4C 7B C9                                  A:FF X:00 Y:00 P:27
+C97B  EA                                        A:FF X:00 Y:00 P:27
+C97C  38                                        A:FF X:00 Y:00 P:27
+C97D  B8                                        A:FF X:00 Y:00 P:27
+C97E  A9 7F                                     A:FF X:00 Y:00 P:27
+C980  69 80                                     A:7F X:00 Y:00 P:25
+C982  D0 09                                     A:00 X:00 Y:00 P:27
+C984  30 07                                     A:00 X:00 Y:00 P:27
+C986  70 05                                     A:00 X:00 Y:00 P:27
+C988  90 03                                     A:00 X:00 Y:00 P:27
+C98A  4C 91 C9                                  A:00 X:00 Y:00 P:27
+C991  EA                                        A:00 X:00 Y:00 P:27
+C992  38                                        A:00 X:00 Y:00 P:27
+C993  B8                                        A:00 X:00 Y:00 P:27
+C994  A9 9F                                     A:00 X:00 Y:00 P:27
+C996  F0 09                                     A:9F X:00 Y:00 P:A5
+C998  10 07                                     A:9F X:00 Y:00 P:A5
+C99A  70 05                                     A:9F X:00 Y:00 P:A5
+C99C  90 03                                     A:9F X:00 Y:00 P:A5
+C99E  4C A5 C9                                  A:9F X:00 Y:00 P:A5
+C9A5  EA                                        A:9F X:00 Y:00 P:A5
+C9A6  18                                        A:9F X:00 Y:00 P:A5
+C9A7  24 01                                     A:9F X:00 Y:00 P:A4
+C9A9  A9 00                                     A:9F X:00 Y:00 P:E4
+C9AB  D0 09                                     A:00 X:00 Y:00 P:66
+C9AD  30 07                                     A:00 X:00 Y:00 P:66
+C9AF  50 05                                     A:00 X:00 Y:00 P:66
+C9B1  B0 03                                     A:00 X:00 Y:00 P:66
+C9B3  4C BA C9                                  A:00 X:00 Y:00 P:66
+C9BA  EA                                        A:00 X:00 Y:00 P:66
+C9BB  24 01                                     A:00 X:00 Y:00 P:66
+C9BD  A9 40                                     A:00 X:00 Y:00 P:E6
+C9BF  C9 40                                     A:40 X:00 Y:00 P:64
+C9C1  30 09                                     A:40 X:00 Y:00 P:67
+C9C3  90 07                                     A:40 X:00 Y:00 P:67
+C9C5  D0 05                                     A:40 X:00 Y:00 P:67
+C9C7  50 03                                     A:40 X:00 Y:00 P:67
+C9C9  4C D0 C9                                  A:40 X:00 Y:00 P:67
+C9D0  EA                                        A:40 X:00 Y:00 P:67
+C9D1  B8                                        A:40 X:00 Y:00 P:67
+C9D2  C9 3F                                     A:40 X:00 Y:00 P:27
+C9D4  F0 09                                     A:40 X:00 Y:00 P:25
+C9D6  30 07                                     A:40 X:00 Y:00 P:25
+C9D8  90 05                                     A:40 X:00 Y:00 P:25
+C9DA  70 03                                     A:40 X:00 Y:00 P:25
+C9DC  4C E3 C9                                  A:40 X:00 Y:00 P:25
+C9E3  EA                                        A:40 X:00 Y:00 P:25
+C9E4  C9 41                                     A:40 X:00 Y:00 P:25
+C9E6  F0 07                                     A:40 X:00 Y:00 P:A4
+C9E8  10 05                                     A:40 X:00 Y:00 P:A4
+C9EA  10 03                                     A:40 X:00 Y:00 P:A4
+C9EC  4C F3 C9                                  A:40 X:00 Y:00 P:A4
+C9F3  EA                                        A:40 X:00 Y:00 P:A4
+C9F4  A9 80                                     A:40 X:00 Y:00 P:A4
+C9F6  C9 00                                     A:80 X:00 Y:00 P:A4
+C9F8  F0 07                                     A:80 X:00 Y:00 P:A5
+C9FA  10 05                                     A:80 X:00 Y:00 P:A5
+C9FC  90 03                                     A:80 X:00 Y:00 P:A5
+C9FE  4C 05 CA                                  A:80 X:00 Y:00 P:A5
+CA05  EA                                        A:80 X:00 Y:00 P:A5
+CA06  C9 80                                     A:80 X:00 Y:00 P:A5
+CA08  D0 07                                     A:80 X:00 Y:00 P:27
+CA0A  30 05                                     A:80 X:00 Y:00 P:27
+CA0C  90 03                                     A:80 X:00 Y:00 P:27
+CA0E  4C 15 CA                                  A:80 X:00 Y:00 P:27
+CA15  EA                                        A:80 X:00 Y:00 P:27
+CA16  C9 81                                     A:80 X:00 Y:00 P:27
+CA18  B0 07                                     A:80 X:00 Y:00 P:A4
+CA1A  F0 05                                     A:80 X:00 Y:00 P:A4
+CA1C  10 03                                     A:80 X:00 Y:00 P:A4
+CA1E  4C 25 CA                                  A:80 X:00 Y:00 P:A4
+CA25  EA                                        A:80 X:00 Y:00 P:A4
+CA26  C9 7F                                     A:80 X:00 Y:00 P:A4
+CA28  90 07                                     A:80 X:00 Y:00 P:25
+CA2A  F0 05                                     A:80 X:00 Y:00 P:25
+CA2C  30 03                                     A:80 X:00 Y:00 P:25
+CA2E  4C 35 CA                                  A:80 X:00 Y:00 P:25
+CA35  EA                                        A:80 X:00 Y:00 P:25
+CA36  24 01                                     A:80 X:00 Y:00 P:25
+CA38  A0 40                                     A:80 X:00 Y:00 P:E5
+CA3A  C0 40                                     A:80 X:00 Y:40 P:65
+CA3C  D0 09                                     A:80 X:00 Y:40 P:67
+CA3E  30 07                                     A:80 X:00 Y:40 P:67
+CA40  90 05                                     A:80 X:00 Y:40 P:67
+CA42  50 03                                     A:80 X:00 Y:40 P:67
+CA44  4C 4B CA                                  A:80 X:00 Y:40 P:67
+CA4B  EA                                        A:80 X:00 Y:40 P:67
+CA4C  B8                                        A:80 X:00 Y:40 P:67
+CA4D  C0 3F                                     A:80 X:00 Y:40 P:27
+CA4F  F0 09                                     A:80 X:00 Y:40 P:25
+CA51  30 07                                     A:80 X:00 Y:40 P:25
+CA53  90 05                                     A:80 X:00 Y:40 P:25
+CA55  70 03                                     A:80 X:00 Y:40 P:25
+CA57  4C 5E CA                                  A:80 X:00 Y:40 P:25
+CA5E  EA                                        A:80 X:00 Y:40 P:25
+CA5F  C0 41                                     A:80 X:00 Y:40 P:25
+CA61  F0 07                                     A:80 X:00 Y:40 P:A4
+CA63  10 05                                     A:80 X:00 Y:40 P:A4
+CA65  10 03                                     A:80 X:00 Y:40 P:A4
+CA67  4C 6E CA                                  A:80 X:00 Y:40 P:A4
+CA6E  EA                                        A:80 X:00 Y:40 P:A4
+CA6F  A0 80                                     A:80 X:00 Y:40 P:A4
+CA71  C0 00                                     A:80 X:00 Y:80 P:A4
+CA73  F0 07                                     A:80 X:00 Y:80 P:A5
+CA75  10 05                                     A:80 X:00 Y:80 P:A5
+CA77  90 03                                     A:80 X:00 Y:80 P:A5
+CA79  4C 80 CA                                  A:80 X:00 Y:80 P:A5
+CA80  EA                                        A:80 X:00 Y:80 P:A5
+CA81  C0 80                                     A:80 X:00 Y:80 P:A5
+CA83  D0 07                                     A:80 X:00 Y:80 P:27
+CA85  30 05                                     A:80 X:00 Y:80 P:27
+CA87  90 03                                     A:80 X:00 Y:80 P:27
+CA89  4C 90 CA                                  A:80 X:00 Y:80 P:27
+CA90  EA                                        A:80 X:00 Y:80 P:27
+CA91  C0 81                                     A:80 X:00 Y:80 P:27
+CA93  B0 07                                     A:80 X:00 Y:80 P:A4
+CA95  F0 05                                     A:80 X:00 Y:80 P:A4
+CA97  10 03                                     A:80 X:00 Y:80 P:A4
+CA99  4C A0 CA                                  A:80 X:00 Y:80 P:A4
+CAA0  EA                                        A:80 X:00 Y:80 P:A4
+CAA1  C0 7F                                     A:80 X:00 Y:80 P:A4
+CAA3  90 07                                     A:80 X:00 Y:80 P:25
+CAA5  F0 05                                     A:80 X:00 Y:80 P:25
+CAA7  30 03                                     A:80 X:00 Y:80 P:25
+CAA9  4C B0 CA                                  A:80 X:00 Y:80 P:25
+CAB0  EA                                        A:80 X:00 Y:80 P:25
+CAB1  24 01                                     A:80 X:00 Y:80 P:25
+CAB3  A2 40                                     A:80 X:00 Y:80 P:E5
+CAB5  E0 40                                     A:80 X:40 Y:80 P:65
+CAB7  D0 09                                     A:80 X:40 Y:80 P:67
+CAB9  30 07                                     A:80 X:40 Y:80 P:67
+CABB  90 05                                     A:80 X:40 Y:80 P:67
+CABD  50 03                                     A:80 X:40 Y:80 P:67
+CABF  4C C6 CA                                  A:80 X:40 Y:80 P:67
+CAC6  EA                                        A:80 X:40 Y:80 P:67
+CAC7  B8                                        A:80 X:40 Y:80 P:67
+CAC8  E0 3F                                     A:80 X:40 Y:80 P:27
+CACA  F0 09                                     A:80 X:40 Y:80 P:25
+CACC  30 07                                     A:80 X:40 Y:80 P:25
+CACE  90 05                                     A:80 X:40 Y:80 P:25
+CAD0  70 03                                     A:80 X:40 Y:80 P:25
+CAD2  4C D9 CA                                  A:80 X:40 Y:80 P:25
+CAD9  EA                                        A:80 X:40 Y:80 P:25
+CADA  E0 41                                     A:80 X:40 Y:80 P:25
+CADC  F0 07                                     A:80 X:40 Y:80 P:A4
+CADE  10 05                                     A:80 X:40 Y:80 P:A4
+CAE0  10 03                                     A:80 X:40 Y:80 P:A4
+CAE2  4C E9 CA                                  A:80 X:40 Y:80 P:A4
+CAE9  EA                                        A:80 X:40 Y:80 P:A4
+CAEA  A2 80                                     A:80 X:40 Y:80 P:A4
+CAEC  E0 00                                     A:80 X:80 Y:80 P:A4
+CAEE  F0 07                                     A:80 X:80 Y:80 P:A5
+CAF0  10 05                                     A:80 X:80 Y:80 P:A5
+CAF2  90 03                                     A:80 X:80 Y:80 P:A5
+CAF4  4C FB CA                                  A:80 X:80 Y:80 P:A5
+CAFB  EA                                        A:80 X:80 Y:80 P:A5
+CAFC  E0 80                                     A:80 X:80 Y:80 P:A5
+CAFE  D0 07                                     A:80 X:80 Y:80 P:27
+CB00  30 05                                     A:80 X:80 Y:80 P:27
+CB02  90 03                                     A:80 X:80 Y:80 P:27
+CB04  4C 0B CB                                  A:80 X:80 Y:80 P:27
+CB0B  EA                                        A:80 X:80 Y:80 P:27
+CB0C  E0 81                                     A:80 X:80 Y:80 P:27
+CB0E  B0 07                                     A:80 X:80 Y:80 P:A4
+CB10  F0 05                                     A:80 X:80 Y:80 P:A4
+CB12  10 03                                     A:80 X:80 Y:80 P:A4
+CB14  4C 1B CB                                  A:80 X:80 Y:80 P:A4
+CB1B  EA                                        A:80 X:80 Y:80 P:A4
+CB1C  E0 7F                                     A:80 X:80 Y:80 P:A4
+CB1E  90 07                                     A:80 X:80 Y:80 P:25
+CB20  F0 05                                     A:80 X:80 Y:80 P:25
+CB22  30 03                                     A:80 X:80 Y:80 P:25
+CB24  4C 2B CB                                  A:80 X:80 Y:80 P:25
+CB2B  EA                                        A:80 X:80 Y:80 P:25
+CB2C  38                                        A:80 X:80 Y:80 P:25
+CB2D  B8                                        A:80 X:80 Y:80 P:25
+CB2E  A2 9F                                     A:80 X:80 Y:80 P:25
+CB30  F0 09                                     A:80 X:9F Y:80 P:A5
+CB32  10 07                                     A:80 X:9F Y:80 P:A5
+CB34  70 05                                     A:80 X:9F Y:80 P:A5
+CB36  90 03                                     A:80 X:9F Y:80 P:A5
+CB38  4C 3F CB                                  A:80 X:9F Y:80 P:A5
+CB3F  EA                                        A:80 X:9F Y:80 P:A5
+CB40  18                                        A:80 X:9F Y:80 P:A5
+CB41  24 01                                     A:80 X:9F Y:80 P:A4
+CB43  A2 00                                     A:80 X:9F Y:80 P:E4
+CB45  D0 09                                     A:80 X:00 Y:80 P:66
+CB47  30 07                                     A:80 X:00 Y:80 P:66
+CB49  50 05                                     A:80 X:00 Y:80 P:66
+CB4B  B0 03                                     A:80 X:00 Y:80 P:66
+CB4D  4C 54 CB                                  A:80 X:00 Y:80 P:66
+CB54  EA                                        A:80 X:00 Y:80 P:66
+CB55  38                                        A:80 X:00 Y:80 P:66
+CB56  B8                                        A:80 X:00 Y:80 P:67
+CB57  A0 9F                                     A:80 X:00 Y:80 P:27
+CB59  F0 09                                     A:80 X:00 Y:9F P:A5
+CB5B  10 07                                     A:80 X:00 Y:9F P:A5
+CB5D  70 05                                     A:80 X:00 Y:9F P:A5
+CB5F  90 03                                     A:80 X:00 Y:9F P:A5
+CB61  4C 68 CB                                  A:80 X:00 Y:9F P:A5
+CB68  EA                                        A:80 X:00 Y:9F P:A5
+CB69  18                                        A:80 X:00 Y:9F P:A5
+CB6A  24 01                                     A:80 X:00 Y:9F P:A4
+CB6C  A0 00                                     A:80 X:00 Y:9F P:E4
+CB6E  D0 09                                     A:80 X:00 Y:00 P:66
+CB70  30 07                                     A:80 X:00 Y:00 P:66
+CB72  50 05                                     A:80 X:00 Y:00 P:66
+CB74  B0 03                                     A:80 X:00 Y:00 P:66
+CB76  4C 7D CB                                  A:80 X:00 Y:00 P:66
+CB7D  EA                                        A:80 X:00 Y:00 P:66
+CB7E  A9 55                                     A:80 X:00 Y:00 P:66
+CB80  A2 AA                                     A:55 X:00 Y:00 P:64
+CB82  A0 33                                     A:55 X:AA Y:00 P:E4
+CB84  C9 55                                     A:55 X:AA Y:33 P:64
+CB86  D0 23                                     A:55 X:AA Y:33 P:67
+CB88  E0 AA                                     A:55 X:AA Y:33 P:67
+CB8A  D0 1F                                     A:55 X:AA Y:33 P:67
+CB8C  C0 33                                     A:55 X:AA Y:33 P:67
+CB8E  D0 1B                                     A:55 X:AA Y:33 P:67
+CB90  C9 55                                     A:55 X:AA Y:33 P:67
+CB92  D0 17                                     A:55 X:AA Y:33 P:67
+CB94  E0 AA                                     A:55 X:AA Y:33 P:67
+CB96  D0 13                                     A:55 X:AA Y:33 P:67
+CB98  C0 33                                     A:55 X:AA Y:33 P:67
+CB9A  D0 0F                                     A:55 X:AA Y:33 P:67
+CB9C  C9 56                                     A:55 X:AA Y:33 P:67
+CB9E  F0 0B                                     A:55 X:AA Y:33 P:E4
+CBA0  E0 AB                                     A:55 X:AA Y:33 P:E4
+CBA2  F0 07                                     A:55 X:AA Y:33 P:E4
+CBA4  C0 34                                     A:55 X:AA Y:33 P:E4
+CBA6  F0 03                                     A:55 X:AA Y:33 P:E4
+CBA8  4C AF CB                                  A:55 X:AA Y:33 P:E4
+CBAF  A0 71                                     A:55 X:AA Y:33 P:E4
+CBB1  20 31 F9                                  A:55 X:AA Y:71 P:64
+F931  24 01                                     A:55 X:AA Y:71 P:64
+F933  A9 40                                     A:55 X:AA Y:71 P:E4
+F935  38                                        A:40 X:AA Y:71 P:64
+F936  60                                        A:40 X:AA Y:71 P:65
+CBB4  E9 40                                     A:40 X:AA Y:71 P:65
+CBB6  20 37 F9                                  A:00 X:AA Y:71 P:27
+F937  30 0B                                     A:00 X:AA Y:71 P:27
+F939  90 09                                     A:00 X:AA Y:71 P:27
+F93B  D0 07                                     A:00 X:AA Y:71 P:27
+F93D  70 05                                     A:00 X:AA Y:71 P:27
+F93F  C9 00                                     A:00 X:AA Y:71 P:27
+F941  D0 01                                     A:00 X:AA Y:71 P:27
+F943  60                                        A:00 X:AA Y:71 P:27
+CBB9  C8                                        A:00 X:AA Y:71 P:27
+CBBA  20 47 F9                                  A:00 X:AA Y:72 P:25
+F947  B8                                        A:00 X:AA Y:72 P:25
+F948  38                                        A:00 X:AA Y:72 P:25
+F949  A9 40                                     A:00 X:AA Y:72 P:25
+F94B  60                                        A:40 X:AA Y:72 P:25
+CBBD  E9 3F                                     A:40 X:AA Y:72 P:25
+CBBF  20 4C F9                                  A:01 X:AA Y:72 P:25
+F94C  F0 0B                                     A:01 X:AA Y:72 P:25
+F94E  30 09                                     A:01 X:AA Y:72 P:25
+F950  90 07                                     A:01 X:AA Y:72 P:25
+F952  70 05                                     A:01 X:AA Y:72 P:25
+F954  C9 01                                     A:01 X:AA Y:72 P:25
+F956  D0 01                                     A:01 X:AA Y:72 P:27
+F958  60                                        A:01 X:AA Y:72 P:27
+CBC2  C8                                        A:01 X:AA Y:72 P:27
+CBC3  20 5C F9                                  A:01 X:AA Y:73 P:25
+F95C  A9 40                                     A:01 X:AA Y:73 P:25
+F95E  38                                        A:40 X:AA Y:73 P:25
+F95F  24 01                                     A:40 X:AA Y:73 P:25
+F961  60                                        A:40 X:AA Y:73 P:E5
+CBC6  E9 41                                     A:40 X:AA Y:73 P:E5
+CBC8  20 62 F9                                  A:FF X:AA Y:73 P:A4
+F962  B0 0B                                     A:FF X:AA Y:73 P:A4
+F964  F0 09                                     A:FF X:AA Y:73 P:A4
+F966  10 07                                     A:FF X:AA Y:73 P:A4
+F968  70 05                                     A:FF X:AA Y:73 P:A4
+F96A  C9 FF                                     A:FF X:AA Y:73 P:A4
+F96C  D0 01                                     A:FF X:AA Y:73 P:27
+F96E  60                                        A:FF X:AA Y:73 P:27
+CBCB  C8                                        A:FF X:AA Y:73 P:27
+CBCC  20 72 F9                                  A:FF X:AA Y:74 P:25
+F972  18                                        A:FF X:AA Y:74 P:25
+F973  A9 80                                     A:FF X:AA Y:74 P:24
+F975  60                                        A:80 X:AA Y:74 P:A4
+CBCF  E9 00                                     A:80 X:AA Y:74 P:A4
+CBD1  20 76 F9                                  A:7F X:AA Y:74 P:65
+F976  90 05                                     A:7F X:AA Y:74 P:65
+F978  C9 7F                                     A:7F X:AA Y:74 P:65
+F97A  D0 01                                     A:7F X:AA Y:74 P:67
+F97C  60                                        A:7F X:AA Y:74 P:67
+CBD4  C8                                        A:7F X:AA Y:74 P:67
+CBD5  20 80 F9                                  A:7F X:AA Y:75 P:65
+F980  38                                        A:7F X:AA Y:75 P:65
+F981  A9 81                                     A:7F X:AA Y:75 P:65
+F983  60                                        A:81 X:AA Y:75 P:E5
+CBD8  E9 7F                                     A:81 X:AA Y:75 P:E5
+CBDA  20 84 F9                                  A:02 X:AA Y:75 P:65
+F984  50 07                                     A:02 X:AA Y:75 P:65
+F986  90 05                                     A:02 X:AA Y:75 P:65
+F988  C9 02                                     A:02 X:AA Y:75 P:65
+F98A  D0 01                                     A:02 X:AA Y:75 P:67
+F98C  60                                        A:02 X:AA Y:75 P:67
+CBDD  60                                        A:02 X:AA Y:75 P:67
+C606  20 DE CB                                  A:02 X:AA Y:75 P:67
+CBDE  EA                                        A:02 X:AA Y:75 P:67
+CBDF  A9 FF                                     A:02 X:AA Y:75 P:67
+CBE1  85 01                                     A:FF X:AA Y:75 P:E5
+CBE3  A9 44                                     A:FF X:AA Y:75 P:E5
+CBE5  A2 55                                     A:44 X:AA Y:75 P:65
+CBE7  A0 66                                     A:44 X:55 Y:75 P:65
+CBE9  E8                                        A:44 X:55 Y:66 P:65
+CBEA  88                                        A:44 X:56 Y:66 P:65
+CBEB  E0 56                                     A:44 X:56 Y:65 P:65
+CBED  D0 21                                     A:44 X:56 Y:65 P:67
+CBEF  C0 65                                     A:44 X:56 Y:65 P:67
+CBF1  D0 1D                                     A:44 X:56 Y:65 P:67
+CBF3  E8                                        A:44 X:56 Y:65 P:67
+CBF4  E8                                        A:44 X:57 Y:65 P:65
+CBF5  88                                        A:44 X:58 Y:65 P:65
+CBF6  88                                        A:44 X:58 Y:64 P:65
+CBF7  E0 58                                     A:44 X:58 Y:63 P:65
+CBF9  D0 15                                     A:44 X:58 Y:63 P:67
+CBFB  C0 63                                     A:44 X:58 Y:63 P:67
+CBFD  D0 11                                     A:44 X:58 Y:63 P:67
+CBFF  CA                                        A:44 X:58 Y:63 P:67
+CC00  C8                                        A:44 X:57 Y:63 P:65
+CC01  E0 57                                     A:44 X:57 Y:64 P:65
+CC03  D0 0B                                     A:44 X:57 Y:64 P:67
+CC05  C0 64                                     A:44 X:57 Y:64 P:67
+CC07  D0 07                                     A:44 X:57 Y:64 P:67
+CC09  C9 44                                     A:44 X:57 Y:64 P:67
+CC0B  D0 03                                     A:44 X:57 Y:64 P:67
+CC0D  4C 14 CC                                  A:44 X:57 Y:64 P:67
+CC14  EA                                        A:44 X:57 Y:64 P:67
+CC15  38                                        A:44 X:57 Y:64 P:67
+CC16  A2 69                                     A:44 X:57 Y:64 P:67
+CC18  A9 96                                     A:44 X:69 Y:64 P:65
+CC1A  24 01                                     A:96 X:69 Y:64 P:E5
+CC1C  A0 FF                                     A:96 X:69 Y:64 P:E5
+CC1E  C8                                        A:96 X:69 Y:FF P:E5
+CC1F  D0 3D                                     A:96 X:69 Y:00 P:67
+CC21  30 3B                                     A:96 X:69 Y:00 P:67
+CC23  90 39                                     A:96 X:69 Y:00 P:67
+CC25  50 37                                     A:96 X:69 Y:00 P:67
+CC27  C0 00                                     A:96 X:69 Y:00 P:67
+CC29  D0 33                                     A:96 X:69 Y:00 P:67
+CC2B  C8                                        A:96 X:69 Y:00 P:67
+CC2C  F0 30                                     A:96 X:69 Y:01 P:65
+CC2E  30 2E                                     A:96 X:69 Y:01 P:65
+CC30  90 2C                                     A:96 X:69 Y:01 P:65
+CC32  50 2A                                     A:96 X:69 Y:01 P:65
+CC34  18                                        A:96 X:69 Y:01 P:65
+CC35  B8                                        A:96 X:69 Y:01 P:64
+CC36  A0 00                                     A:96 X:69 Y:01 P:24
+CC38  88                                        A:96 X:69 Y:00 P:26
+CC39  F0 23                                     A:96 X:69 Y:FF P:A4
+CC3B  10 21                                     A:96 X:69 Y:FF P:A4
+CC3D  B0 1F                                     A:96 X:69 Y:FF P:A4
+CC3F  70 1D                                     A:96 X:69 Y:FF P:A4
+CC41  C0 FF                                     A:96 X:69 Y:FF P:A4
+CC43  D0 19                                     A:96 X:69 Y:FF P:27
+CC45  18                                        A:96 X:69 Y:FF P:27
+CC46  88                                        A:96 X:69 Y:FF P:26
+CC47  F0 15                                     A:96 X:69 Y:FE P:A4
+CC49  10 13                                     A:96 X:69 Y:FE P:A4
+CC4B  B0 11                                     A:96 X:69 Y:FE P:A4
+CC4D  70 0F                                     A:96 X:69 Y:FE P:A4
+CC4F  C0 FE                                     A:96 X:69 Y:FE P:A4
+CC51  D0 0B                                     A:96 X:69 Y:FE P:27
+CC53  C9 96                                     A:96 X:69 Y:FE P:27
+CC55  D0 07                                     A:96 X:69 Y:FE P:27
+CC57  E0 69                                     A:96 X:69 Y:FE P:27
+CC59  D0 03                                     A:96 X:69 Y:FE P:27
+CC5B  4C 62 CC                                  A:96 X:69 Y:FE P:27
+CC62  EA                                        A:96 X:69 Y:FE P:27
+CC63  38                                        A:96 X:69 Y:FE P:27
+CC64  A0 69                                     A:96 X:69 Y:FE P:27
+CC66  A9 96                                     A:96 X:69 Y:69 P:25
+CC68  24 01                                     A:96 X:69 Y:69 P:A5
+CC6A  A2 FF                                     A:96 X:69 Y:69 P:E5
+CC6C  E8                                        A:96 X:FF Y:69 P:E5
+CC6D  D0 3D                                     A:96 X:00 Y:69 P:67
+CC6F  30 3B                                     A:96 X:00 Y:69 P:67
+CC71  90 39                                     A:96 X:00 Y:69 P:67
+CC73  50 37                                     A:96 X:00 Y:69 P:67
+CC75  E0 00                                     A:96 X:00 Y:69 P:67
+CC77  D0 33                                     A:96 X:00 Y:69 P:67
+CC79  E8                                        A:96 X:00 Y:69 P:67
+CC7A  F0 30                                     A:96 X:01 Y:69 P:65
+CC7C  30 2E                                     A:96 X:01 Y:69 P:65
+CC7E  90 2C                                     A:96 X:01 Y:69 P:65
+CC80  50 2A                                     A:96 X:01 Y:69 P:65
+CC82  18                                        A:96 X:01 Y:69 P:65
+CC83  B8                                        A:96 X:01 Y:69 P:64
+CC84  A2 00                                     A:96 X:01 Y:69 P:24
+CC86  CA                                        A:96 X:00 Y:69 P:26
+CC87  F0 23                                     A:96 X:FF Y:69 P:A4
+CC89  10 21                                     A:96 X:FF Y:69 P:A4
+CC8B  B0 1F                                     A:96 X:FF Y:69 P:A4
+CC8D  70 1D                                     A:96 X:FF Y:69 P:A4
+CC8F  E0 FF                                     A:96 X:FF Y:69 P:A4
+CC91  D0 19                                     A:96 X:FF Y:69 P:27
+CC93  18                                        A:96 X:FF Y:69 P:27
+CC94  CA                                        A:96 X:FF Y:69 P:26
+CC95  F0 15                                     A:96 X:FE Y:69 P:A4
+CC97  10 13                                     A:96 X:FE Y:69 P:A4
+CC99  B0 11                                     A:96 X:FE Y:69 P:A4
+CC9B  70 0F                                     A:96 X:FE Y:69 P:A4
+CC9D  E0 FE                                     A:96 X:FE Y:69 P:A4
+CC9F  D0 0B                                     A:96 X:FE Y:69 P:27
+CCA1  C9 96                                     A:96 X:FE Y:69 P:27
+CCA3  D0 07                                     A:96 X:FE Y:69 P:27
+CCA5  C0 69                                     A:96 X:FE Y:69 P:27
+CCA7  D0 03                                     A:96 X:FE Y:69 P:27
+CCA9  4C B0 CC                                  A:96 X:FE Y:69 P:27
+CCB0  EA                                        A:96 X:FE Y:69 P:27
+CCB1  A9 85                                     A:96 X:FE Y:69 P:27
+CCB3  A2 34                                     A:85 X:FE Y:69 P:A5
+CCB5  A0 99                                     A:85 X:34 Y:69 P:25
+CCB7  18                                        A:85 X:34 Y:99 P:A5
+CCB8  24 01                                     A:85 X:34 Y:99 P:A4
+CCBA  A8                                        A:85 X:34 Y:99 P:E4
+CCBB  F0 2E                                     A:85 X:34 Y:85 P:E4
+CCBD  B0 2C                                     A:85 X:34 Y:85 P:E4
+CCBF  50 2A                                     A:85 X:34 Y:85 P:E4
+CCC1  10 28                                     A:85 X:34 Y:85 P:E4
+CCC3  C9 85                                     A:85 X:34 Y:85 P:E4
+CCC5  D0 24                                     A:85 X:34 Y:85 P:67
+CCC7  E0 34                                     A:85 X:34 Y:85 P:67
+CCC9  D0 20                                     A:85 X:34 Y:85 P:67
+CCCB  C0 85                                     A:85 X:34 Y:85 P:67
+CCCD  D0 1C                                     A:85 X:34 Y:85 P:67
+CCCF  A9 00                                     A:85 X:34 Y:85 P:67
+CCD1  38                                        A:00 X:34 Y:85 P:67
+CCD2  B8                                        A:00 X:34 Y:85 P:67
+CCD3  A8                                        A:00 X:34 Y:85 P:27
+CCD4  D0 15                                     A:00 X:34 Y:00 P:27
+CCD6  90 13                                     A:00 X:34 Y:00 P:27
+CCD8  70 11                                     A:00 X:34 Y:00 P:27
+CCDA  30 0F                                     A:00 X:34 Y:00 P:27
+CCDC  C9 00                                     A:00 X:34 Y:00 P:27
+CCDE  D0 0B                                     A:00 X:34 Y:00 P:27
+CCE0  E0 34                                     A:00 X:34 Y:00 P:27
+CCE2  D0 07                                     A:00 X:34 Y:00 P:27
+CCE4  C0 00                                     A:00 X:34 Y:00 P:27
+CCE6  D0 03                                     A:00 X:34 Y:00 P:27
+CCE8  4C EF CC                                  A:00 X:34 Y:00 P:27
+CCEF  EA                                        A:00 X:34 Y:00 P:27
+CCF0  A9 85                                     A:00 X:34 Y:00 P:27
+CCF2  A2 34                                     A:85 X:34 Y:00 P:A5
+CCF4  A0 99                                     A:85 X:34 Y:00 P:25
+CCF6  18                                        A:85 X:34 Y:99 P:A5
+CCF7  24 01                                     A:85 X:34 Y:99 P:A4
+CCF9  AA                                        A:85 X:34 Y:99 P:E4
+CCFA  F0 2E                                     A:85 X:85 Y:99 P:E4
+CCFC  B0 2C                                     A:85 X:85 Y:99 P:E4
+CCFE  50 2A                                     A:85 X:85 Y:99 P:E4
+CD00  10 28                                     A:85 X:85 Y:99 P:E4
+CD02  C9 85                                     A:85 X:85 Y:99 P:E4
+CD04  D0 24                                     A:85 X:85 Y:99 P:67
+CD06  E0 85                                     A:85 X:85 Y:99 P:67
+CD08  D0 20                                     A:85 X:85 Y:99 P:67
+CD0A  C0 99                                     A:85 X:85 Y:99 P:67
+CD0C  D0 1C                                     A:85 X:85 Y:99 P:67
+CD0E  A9 00                                     A:85 X:85 Y:99 P:67
+CD10  38                                        A:00 X:85 Y:99 P:67
+CD11  B8                                        A:00 X:85 Y:99 P:67
+CD12  AA                                        A:00 X:85 Y:99 P:27
+CD13  D0 15                                     A:00 X:00 Y:99 P:27
+CD15  90 13                                     A:00 X:00 Y:99 P:27
+CD17  70 11                                     A:00 X:00 Y:99 P:27
+CD19  30 0F                                     A:00 X:00 Y:99 P:27
+CD1B  C9 00                                     A:00 X:00 Y:99 P:27
+CD1D  D0 0B                                     A:00 X:00 Y:99 P:27
+CD1F  E0 00                                     A:00 X:00 Y:99 P:27
+CD21  D0 07                                     A:00 X:00 Y:99 P:27
+CD23  C0 99                                     A:00 X:00 Y:99 P:27
+CD25  D0 03                                     A:00 X:00 Y:99 P:27
+CD27  4C 2E CD                                  A:00 X:00 Y:99 P:27
+CD2E  EA                                        A:00 X:00 Y:99 P:27
+CD2F  A9 85                                     A:00 X:00 Y:99 P:27
+CD31  A2 34                                     A:85 X:00 Y:99 P:A5
+CD33  A0 99                                     A:85 X:34 Y:99 P:25
+CD35  18                                        A:85 X:34 Y:99 P:A5
+CD36  24 01                                     A:85 X:34 Y:99 P:A4
+CD38  98                                        A:85 X:34 Y:99 P:E4
+CD39  F0 2E                                     A:99 X:34 Y:99 P:E4
+CD3B  B0 2C                                     A:99 X:34 Y:99 P:E4
+CD3D  50 2A                                     A:99 X:34 Y:99 P:E4
+CD3F  10 28                                     A:99 X:34 Y:99 P:E4
+CD41  C9 99                                     A:99 X:34 Y:99 P:E4
+CD43  D0 24                                     A:99 X:34 Y:99 P:67
+CD45  E0 34                                     A:99 X:34 Y:99 P:67
+CD47  D0 20                                     A:99 X:34 Y:99 P:67
+CD49  C0 99                                     A:99 X:34 Y:99 P:67
+CD4B  D0 1C                                     A:99 X:34 Y:99 P:67
+CD4D  A0 00                                     A:99 X:34 Y:99 P:67
+CD4F  38                                        A:99 X:34 Y:00 P:67
+CD50  B8                                        A:99 X:34 Y:00 P:67
+CD51  98                                        A:99 X:34 Y:00 P:27
+CD52  D0 15                                     A:00 X:34 Y:00 P:27
+CD54  90 13                                     A:00 X:34 Y:00 P:27
+CD56  70 11                                     A:00 X:34 Y:00 P:27
+CD58  30 0F                                     A:00 X:34 Y:00 P:27
+CD5A  C9 00                                     A:00 X:34 Y:00 P:27
+CD5C  D0 0B                                     A:00 X:34 Y:00 P:27
+CD5E  E0 34                                     A:00 X:34 Y:00 P:27
+CD60  D0 07                                     A:00 X:34 Y:00 P:27
+CD62  C0 00                                     A:00 X:34 Y:00 P:27
+CD64  D0 03                                     A:00 X:34 Y:00 P:27
+CD66  4C 6D CD                                  A:00 X:34 Y:00 P:27
+CD6D  EA                                        A:00 X:34 Y:00 P:27
+CD6E  A9 85                                     A:00 X:34 Y:00 P:27
+CD70  A2 34                                     A:85 X:34 Y:00 P:A5
+CD72  A0 99                                     A:85 X:34 Y:00 P:25
+CD74  18                                        A:85 X:34 Y:99 P:A5
+CD75  24 01                                     A:85 X:34 Y:99 P:A4
+CD77  8A                                        A:85 X:34 Y:99 P:E4
+CD78  F0 2E                                     A:34 X:34 Y:99 P:64
+CD7A  B0 2C                                     A:34 X:34 Y:99 P:64
+CD7C  50 2A                                     A:34 X:34 Y:99 P:64
+CD7E  30 28                                     A:34 X:34 Y:99 P:64
+CD80  C9 34                                     A:34 X:34 Y:99 P:64
+CD82  D0 24                                     A:34 X:34 Y:99 P:67
+CD84  E0 34                                     A:34 X:34 Y:99 P:67
+CD86  D0 20                                     A:34 X:34 Y:99 P:67
+CD88  C0 99                                     A:34 X:34 Y:99 P:67
+CD8A  D0 1C                                     A:34 X:34 Y:99 P:67
+CD8C  A2 00                                     A:34 X:34 Y:99 P:67
+CD8E  38                                        A:34 X:00 Y:99 P:67
+CD8F  B8                                        A:34 X:00 Y:99 P:67
+CD90  8A                                        A:34 X:00 Y:99 P:27
+CD91  D0 15                                     A:00 X:00 Y:99 P:27
+CD93  90 13                                     A:00 X:00 Y:99 P:27
+CD95  70 11                                     A:00 X:00 Y:99 P:27
+CD97  30 0F                                     A:00 X:00 Y:99 P:27
+CD99  C9 00                                     A:00 X:00 Y:99 P:27
+CD9B  D0 0B                                     A:00 X:00 Y:99 P:27
+CD9D  E0 00                                     A:00 X:00 Y:99 P:27
+CD9F  D0 07                                     A:00 X:00 Y:99 P:27
+CDA1  C0 99                                     A:00 X:00 Y:99 P:27
+CDA3  D0 03                                     A:00 X:00 Y:99 P:27
+CDA5  4C AC CD                                  A:00 X:00 Y:99 P:27
+CDAC  EA                                        A:00 X:00 Y:99 P:27
+CDAD  BA                                        A:00 X:00 Y:99 P:27
+CDAE  8E FF 07                                  A:00 X:FB Y:99 P:A5
+CDB1  A0 33                                     A:00 X:FB Y:99 P:A5
+CDB3  A2 69                                     A:00 X:FB Y:33 P:25
+CDB5  A9 84                                     A:00 X:69 Y:33 P:25
+CDB7  18                                        A:84 X:69 Y:33 P:A5
+CDB8  24 01                                     A:84 X:69 Y:33 P:A4
+CDBA  9A                                        A:84 X:69 Y:33 P:E4
+CDBB  F0 32                                     A:84 X:69 Y:33 P:E4
+CDBD  10 30                                     A:84 X:69 Y:33 P:E4
+CDBF  B0 2E                                     A:84 X:69 Y:33 P:E4
+CDC1  50 2C                                     A:84 X:69 Y:33 P:E4
+CDC3  C9 84                                     A:84 X:69 Y:33 P:E4
+CDC5  D0 28                                     A:84 X:69 Y:33 P:67
+CDC7  E0 69                                     A:84 X:69 Y:33 P:67
+CDC9  D0 24                                     A:84 X:69 Y:33 P:67
+CDCB  C0 33                                     A:84 X:69 Y:33 P:67
+CDCD  D0 20                                     A:84 X:69 Y:33 P:67
+CDCF  A0 01                                     A:84 X:69 Y:33 P:67
+CDD1  A9 04                                     A:84 X:69 Y:01 P:65
+CDD3  38                                        A:04 X:69 Y:01 P:65
+CDD4  B8                                        A:04 X:69 Y:01 P:65
+CDD5  A2 00                                     A:04 X:69 Y:01 P:25
+CDD7  BA                                        A:04 X:00 Y:01 P:27
+CDD8  F0 15                                     A:04 X:69 Y:01 P:25
+CDDA  30 13                                     A:04 X:69 Y:01 P:25
+CDDC  90 11                                     A:04 X:69 Y:01 P:25
+CDDE  70 0F                                     A:04 X:69 Y:01 P:25
+CDE0  E0 69                                     A:04 X:69 Y:01 P:25
+CDE2  D0 0B                                     A:04 X:69 Y:01 P:27
+CDE4  C9 04                                     A:04 X:69 Y:01 P:27
+CDE6  D0 07                                     A:04 X:69 Y:01 P:27
+CDE8  C0 01                                     A:04 X:69 Y:01 P:27
+CDEA  D0 03                                     A:04 X:69 Y:01 P:27
+CDEC  4C F3 CD                                  A:04 X:69 Y:01 P:27
+CDF3  AE FF 07                                  A:04 X:69 Y:01 P:27
+CDF6  9A                                        A:04 X:FB Y:01 P:A5
+CDF7  60                                        A:04 X:FB Y:01 P:A5
+C609  20 F8 CD                                  A:04 X:FB Y:01 P:A5
+CDF8  A9 FF                                     A:04 X:FB Y:01 P:A5
+CDFA  85 01                                     A:FF X:FB Y:01 P:A5
+CDFC  BA                                        A:FF X:FB Y:01 P:A5
+CDFD  8E FF 07                                  A:FF X:FB Y:01 P:A5
+CE00  EA                                        A:FF X:FB Y:01 P:A5
+CE01  A2 80                                     A:FF X:FB Y:01 P:A5
+CE03  9A                                        A:FF X:80 Y:01 P:A5
+CE04  A9 33                                     A:FF X:80 Y:01 P:A5
+CE06  48                                        A:33 X:80 Y:01 P:25
+CE07  A9 69                                     A:33 X:80 Y:01 P:25
+CE09  48                                        A:69 X:80 Y:01 P:25
+CE0A  BA                                        A:69 X:80 Y:01 P:25
+CE0B  E0 7E                                     A:69 X:7E Y:01 P:25
+CE0D  D0 20                                     A:69 X:7E Y:01 P:27
+CE0F  68                                        A:69 X:7E Y:01 P:27
+CE10  C9 69                                     A:69 X:7E Y:01 P:25
+CE12  D0 1B                                     A:69 X:7E Y:01 P:27
+CE14  68                                        A:69 X:7E Y:01 P:27
+CE15  C9 33                                     A:33 X:7E Y:01 P:25
+CE17  D0 16                                     A:33 X:7E Y:01 P:27
+CE19  BA                                        A:33 X:7E Y:01 P:27
+CE1A  E0 80                                     A:33 X:80 Y:01 P:A5
+CE1C  D0 11                                     A:33 X:80 Y:01 P:27
+CE1E  AD 80 01                                  A:33 X:80 Y:01 P:27
+CE21  C9 33                                     A:33 X:80 Y:01 P:25
+CE23  D0 0A                                     A:33 X:80 Y:01 P:27
+CE25  AD 7F 01                                  A:33 X:80 Y:01 P:27
+CE28  C9 69                                     A:69 X:80 Y:01 P:25
+CE2A  D0 03                                     A:69 X:80 Y:01 P:27
+CE2C  4C 33 CE                                  A:69 X:80 Y:01 P:27
+CE33  EA                                        A:69 X:80 Y:01 P:27
+CE34  A2 80                                     A:69 X:80 Y:01 P:27
+CE36  9A                                        A:69 X:80 Y:01 P:A5
+CE37  20 3D CE                                  A:69 X:80 Y:01 P:A5
+CE3D  BA                                        A:69 X:80 Y:01 P:A5
+CE3E  E0 7E                                     A:69 X:7E Y:01 P:25
+CE40  D0 19                                     A:69 X:7E Y:01 P:27
+CE42  68                                        A:69 X:7E Y:01 P:27
+CE43  68                                        A:39 X:7E Y:01 P:25
+CE44  BA                                        A:CE X:7E Y:01 P:A5
+CE45  E0 80                                     A:CE X:80 Y:01 P:A5
+CE47  D0 12                                     A:CE X:80 Y:01 P:27
+CE49  A9 00                                     A:CE X:80 Y:01 P:27
+CE4B  20 4E CE                                  A:00 X:80 Y:01 P:27
+CE4E  68                                        A:00 X:80 Y:01 P:27
+CE4F  C9 4D                                     A:4D X:80 Y:01 P:25
+CE51  D0 08                                     A:4D X:80 Y:01 P:27
+CE53  68                                        A:4D X:80 Y:01 P:27
+CE54  C9 CE                                     A:CE X:80 Y:01 P:A5
+CE56  D0 03                                     A:CE X:80 Y:01 P:27
+CE58  4C 5F CE                                  A:CE X:80 Y:01 P:27
+CE5F  EA                                        A:CE X:80 Y:01 P:27
+CE60  A9 CE                                     A:CE X:80 Y:01 P:27
+CE62  48                                        A:CE X:80 Y:01 P:A5
+CE63  A9 66                                     A:CE X:80 Y:01 P:A5
+CE65  48                                        A:66 X:80 Y:01 P:25
+CE66  60                                        A:66 X:80 Y:01 P:25
+CE67  A2 77                                     A:66 X:80 Y:01 P:25
+CE69  A0 69                                     A:66 X:77 Y:01 P:25
+CE6B  18                                        A:66 X:77 Y:69 P:25
+CE6C  24 01                                     A:66 X:77 Y:69 P:24
+CE6E  A9 83                                     A:66 X:77 Y:69 P:E4
+CE70  20 66 CE                                  A:83 X:77 Y:69 P:E4
+CE66  60                                        A:83 X:77 Y:69 P:E4
+CE73  F0 24                                     A:83 X:77 Y:69 P:E4
+CE75  10 22                                     A:83 X:77 Y:69 P:E4
+CE77  B0 20                                     A:83 X:77 Y:69 P:E4
+CE79  50 1E                                     A:83 X:77 Y:69 P:E4
+CE7B  C9 83                                     A:83 X:77 Y:69 P:E4
+CE7D  D0 1A                                     A:83 X:77 Y:69 P:67
+CE7F  C0 69                                     A:83 X:77 Y:69 P:67
+CE81  D0 16                                     A:83 X:77 Y:69 P:67
+CE83  E0 77                                     A:83 X:77 Y:69 P:67
+CE85  D0 12                                     A:83 X:77 Y:69 P:67
+CE87  38                                        A:83 X:77 Y:69 P:67
+CE88  B8                                        A:83 X:77 Y:69 P:67
+CE89  A9 00                                     A:83 X:77 Y:69 P:27
+CE8B  20 66 CE                                  A:00 X:77 Y:69 P:27
+CE66  60                                        A:00 X:77 Y:69 P:27
+CE8E  D0 09                                     A:00 X:77 Y:69 P:27
+CE90  30 07                                     A:00 X:77 Y:69 P:27
+CE92  90 05                                     A:00 X:77 Y:69 P:27
+CE94  70 03                                     A:00 X:77 Y:69 P:27
+CE96  4C 9D CE                                  A:00 X:77 Y:69 P:27
+CE9D  EA                                        A:00 X:77 Y:69 P:27
+CE9E  A9 CE                                     A:00 X:77 Y:69 P:27
+CEA0  48                                        A:CE X:77 Y:69 P:A5
+CEA1  A9 AE                                     A:CE X:77 Y:69 P:A5
+CEA3  48                                        A:AE X:77 Y:69 P:A5
+CEA4  A9 65                                     A:AE X:77 Y:69 P:A5
+CEA6  48                                        A:65 X:77 Y:69 P:25
+CEA7  A9 55                                     A:65 X:77 Y:69 P:25
+CEA9  A0 88                                     A:55 X:77 Y:69 P:25
+CEAB  A2 99                                     A:55 X:77 Y:88 P:A5
+CEAD  40                                        A:55 X:99 Y:88 P:A5
+CEAE  30 35                                     A:55 X:99 Y:88 P:65
+CEB0  50 33                                     A:55 X:99 Y:88 P:65
+CEB2  F0 31                                     A:55 X:99 Y:88 P:65
+CEB4  90 2F                                     A:55 X:99 Y:88 P:65
+CEB6  C9 55                                     A:55 X:99 Y:88 P:65
+CEB8  D0 2B                                     A:55 X:99 Y:88 P:67
+CEBA  C0 88                                     A:55 X:99 Y:88 P:67
+CEBC  D0 27                                     A:55 X:99 Y:88 P:67
+CEBE  E0 99                                     A:55 X:99 Y:88 P:67
+CEC0  D0 23                                     A:55 X:99 Y:88 P:67
+CEC2  A9 CE                                     A:55 X:99 Y:88 P:67
+CEC4  48                                        A:CE X:99 Y:88 P:E5
+CEC5  A9 CE                                     A:CE X:99 Y:88 P:E5
+CEC7  48                                        A:CE X:99 Y:88 P:E5
+CEC8  A9 87                                     A:CE X:99 Y:88 P:E5
+CECA  48                                        A:87 X:99 Y:88 P:E5
+CECB  A9 55                                     A:87 X:99 Y:88 P:E5
+CECD  40                                        A:55 X:99 Y:88 P:65
+CECE  10 15                                     A:55 X:99 Y:88 P:A7
+CED0  70 13                                     A:55 X:99 Y:88 P:A7
+CED2  D0 11                                     A:55 X:99 Y:88 P:A7
+CED4  90 0F                                     A:55 X:99 Y:88 P:A7
+CED6  C9 55                                     A:55 X:99 Y:88 P:A7
+CED8  D0 0B                                     A:55 X:99 Y:88 P:27
+CEDA  C0 88                                     A:55 X:99 Y:88 P:27
+CEDC  D0 07                                     A:55 X:99 Y:88 P:27
+CEDE  E0 99                                     A:55 X:99 Y:88 P:27
+CEE0  D0 03                                     A:55 X:99 Y:88 P:27
+CEE2  4C E9 CE                                  A:55 X:99 Y:88 P:27
+CEE9  AE FF 07                                  A:55 X:99 Y:88 P:27
+CEEC  9A                                        A:55 X:FB Y:88 P:A5
+CEED  60                                        A:55 X:FB Y:88 P:A5
+C60C  20 EE CE                                  A:55 X:FB Y:88 P:A5
+CEEE  A2 55                                     A:55 X:FB Y:88 P:A5
+CEF0  A0 69                                     A:55 X:55 Y:88 P:25
+CEF2  A9 FF                                     A:55 X:55 Y:69 P:25
+CEF4  85 01                                     A:FF X:55 Y:69 P:A5
+CEF6  EA                                        A:FF X:55 Y:69 P:A5
+CEF7  24 01                                     A:FF X:55 Y:69 P:A5
+CEF9  38                                        A:FF X:55 Y:69 P:E5
+CEFA  A9 01                                     A:FF X:55 Y:69 P:E5
+CEFC  4A                                        A:01 X:55 Y:69 P:65
+CEFD  90 1D                                     A:00 X:55 Y:69 P:67
+CEFF  D0 1B                                     A:00 X:55 Y:69 P:67
+CF01  30 19                                     A:00 X:55 Y:69 P:67
+CF03  50 17                                     A:00 X:55 Y:69 P:67
+CF05  C9 00                                     A:00 X:55 Y:69 P:67
+CF07  D0 13                                     A:00 X:55 Y:69 P:67
+CF09  B8                                        A:00 X:55 Y:69 P:67
+CF0A  A9 AA                                     A:00 X:55 Y:69 P:27
+CF0C  4A                                        A:AA X:55 Y:69 P:A5
+CF0D  B0 0D                                     A:55 X:55 Y:69 P:24
+CF0F  F0 0B                                     A:55 X:55 Y:69 P:24
+CF11  30 09                                     A:55 X:55 Y:69 P:24
+CF13  70 07                                     A:55 X:55 Y:69 P:24
+CF15  C9 55                                     A:55 X:55 Y:69 P:24
+CF17  D0 03                                     A:55 X:55 Y:69 P:27
+CF19  4C 20 CF                                  A:55 X:55 Y:69 P:27
+CF20  EA                                        A:55 X:55 Y:69 P:27
+CF21  24 01                                     A:55 X:55 Y:69 P:27
+CF23  38                                        A:55 X:55 Y:69 P:E5
+CF24  A9 80                                     A:55 X:55 Y:69 P:E5
+CF26  0A                                        A:80 X:55 Y:69 P:E5
+CF27  90 1E                                     A:00 X:55 Y:69 P:67
+CF29  D0 1C                                     A:00 X:55 Y:69 P:67
+CF2B  30 1A                                     A:00 X:55 Y:69 P:67

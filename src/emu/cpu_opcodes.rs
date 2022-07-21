@@ -197,7 +197,7 @@ impl Instruction {
       0xA8 => Instruction { opcode: Opcode::TAY, addr_mode: AddressingMode::Implied,      cycles: 2 },
       0xA9 => Instruction { opcode: Opcode::LDA, addr_mode: AddressingMode::Immediate,    cycles: 2 },
       0xAA => Instruction { opcode: Opcode::TAX, addr_mode: AddressingMode::Implied,      cycles: 2 },
-      0xAC => Instruction { opcode: Opcode::LDA, addr_mode: AddressingMode::Absolute,     cycles: 4 },
+      0xAD => Instruction { opcode: Opcode::LDA, addr_mode: AddressingMode::Absolute,     cycles: 4 },
       0xAE => Instruction { opcode: Opcode::LDX, addr_mode: AddressingMode::Absolute,     cycles: 4 },
       // 0xB*
       0xB0 => Instruction { opcode: Opcode::BCS, addr_mode: AddressingMode::Relative,     cycles: 2 },

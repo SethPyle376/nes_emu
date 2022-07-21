@@ -18,17 +18,11 @@ fn main() {
   let opts = Opts::parse();
   let mut cpu = CPU::new(Some("blah".to_string()));
 
-  let cycle_count = 100;
+  let cycle_count = 100000;
   let mut cycles = 0;
 
   let mut bus = Bus::new(Cartridge::load(&opts.rom_path.as_str()).unwrap());
-  bus.ram[0x0000] = 0x69;
-  bus.ram[0x0001] = 0x24;
-  bus.ram[0x0002] = 0x69;
-  bus.ram[0x0003] = 0x32;
-  bus.ram[0x0004] = 0x4C;
-  bus.ram[0x0005] = 0x00;
-  bus.ram[0x0006] = 0x00;
+  cpu.reset(&mut bus);
 
   let start = Instant::now();
   while cycles < cycle_count {
