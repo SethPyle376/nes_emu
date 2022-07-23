@@ -1,3 +1,6 @@
+use std::fs::{File, OpenOptions};
+use std::io::Write;
+
 use crate::emu::bus::Bus;
 use crate::emu::cpu_opcodes::{Opcode, Instruction, AddressingMode};
 
@@ -32,11 +35,16 @@ pub struct CPU {
   pub location: u16,
   pub relative_location: u16,
 
-  trace_file: Option<String>
+  trace_file_name: Option<String>,
+  trace_file: Option<File>
 }
 
 impl CPU {
-  pub fn new(trace_file: Option<String>) -> CPU {
+  pub fn new(trace_file_name: Option<String>) -> CPU {
+    let mut trace_file = None;
+    if trace_file_name.is_some() {
+      trace_file = Some(OpenOptions::new().write(true).append(true).create(true).open(trace_file_name.clone().unwrap().as_str()).unwrap());
+    }
     CPU {
       sp: 0x00,
       r_a: 0x00,
@@ -56,6 +64,7 @@ impl CPU {
       f_u: false,
       location: 0x0000,
       relative_location: 0x0000,
+      trace_file_name: trace_file_name,
       trace_file
     }
   }
@@ -88,7 +97,7 @@ impl CPU {
     self.f_b = false;
 
     self.cycles = 0;
-    self.skip_cycles = 8;
+    self.skip_cycles = 7;
   }
 
   pub fn interrupt(&mut self, bus: &mut Bus) {
@@ -140,14 +149,14 @@ impl CPU {
 
     self.pc = ((hi as u16) << 8) | (lo as u16);
 
-    self.skip_cycles = 8;
+    self.skip_cycles = 7;
   }
 
   pub fn step(&mut self, bus: &mut Bus) {
     self.update_status_register();
-    self.cycles += 1;
     if self.skip_cycles > 0 {
       self.skip_cycles -= 1;
+      self.cycles += 1;
       return;
     }
 
@@ -168,6 +177,7 @@ impl CPU {
     // Execute instruction
     let wait_cycles = self.execute_instruction(&instruction, bus);
     self.skip_cycles = wait_cycles - 1;
+    self.cycles += 1;
   }
   
   pub fn read(&self, addr: u16, bus: &mut Bus) -> u8 {
@@ -183,7 +193,7 @@ impl CPU {
 
     let mut op_data = self.r_a;
 
-    if instruction.addr_mode != AddressingMode::Implied {
+    if instruction.addr_mode != AddressingMode::Implied && instruction.addr_mode != AddressingMode::Accumulator {
       op_data = bus.read(self.location);
     }
 
@@ -199,7 +209,7 @@ impl CPU {
       },
       Opcode::SBC => {
         let inverted = (op_data as u16) ^ 0x00FF;
-        let difference = self.r_a as u16 + inverted as u16 + self.f_c as u16 + 1;
+        let difference = self.r_a as u16 + inverted as u16 + self.f_c as u16;
 
         self.f_c = difference & 0xFF00 != 0;
         self.f_z = (difference & 0x00FF) == 0;
@@ -226,21 +236,21 @@ impl CPU {
           self.location = self.pc + self.relative_location;
           self.pc = self.location;
         }
-        return address_mode_cycles + instruction.cycles;
+        return address_mode_cycles + instruction.cycles + if self.f_c {0} else {1};
       },
       Opcode::BCS => {
         if self.f_c == true {
           self.location = self.pc + self.relative_location;
           self.pc = self.location;
         }
-        return address_mode_cycles + instruction.cycles;
+        return address_mode_cycles + instruction.cycles + if self.f_c {1} else {0};
       },
       Opcode::BEQ => {
         if self.f_z == true {
           self.location = self.pc + self.relative_location;
           self.pc = self.location;
         }
-        return address_mode_cycles + instruction.cycles;
+        return address_mode_cycles + instruction.cycles + if self.f_z {1} else {0};
       },
       Opcode::BIT => {
         let bit = self.r_a & op_data;
@@ -261,14 +271,14 @@ impl CPU {
           self.location = self.pc + self.relative_location;
           self.pc = self.location;
         }
-        return address_mode_cycles + instruction.cycles;
+        return address_mode_cycles + instruction.cycles + if self.f_z {0} else {1};
       },
       Opcode::BPL => {
         if self.f_n == false {
           self.location = self.pc + self.relative_location;
           self.pc = self.location;
         }
-        return address_mode_cycles + instruction.cycles;
+        return address_mode_cycles + instruction.cycles + if self.f_n {0} else {1};
       },
       Opcode::BRK => {
         self.f_i = true;
@@ -292,14 +302,14 @@ impl CPU {
           self.location = self.pc + self.relative_location;
           self.pc = self.location;
         }
-        return address_mode_cycles + instruction.cycles;
+        return address_mode_cycles + instruction.cycles + if self.f_v {0} else {1};
       },
       Opcode::BVS => {
         if self.f_v == true {
           self.location = self.pc + self.relative_location;
           self.pc = self.location;
         }
-        return address_mode_cycles + instruction.cycles;
+        return address_mode_cycles + instruction.cycles + if self.f_v {1} else {0};
       },
       Opcode::CLC => {
         self.f_c = false;
@@ -321,21 +331,21 @@ impl CPU {
         let difference = self.r_a as u16 - op_data as u16;
         self.f_c = self.r_a >= op_data;
         self.f_z = (difference & 0x00FF) == 0;
-        self.f_n = (difference & 0x800) != 0;
+        self.f_n = (difference & 0x0080) != 0;
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::CPX => {
         let difference = self.r_x as u16 - op_data as u16;
         self.f_c = self.r_x >= op_data;
         self.f_z = (difference & 0x00FF) == 0x0000;
-        self.f_n = (difference & 0x800) != 0;
+        self.f_n = (difference & 0x0080) != 0;
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::CPY => {
         let difference = self.r_y as u16 - op_data as u16;
         self.f_c = self.r_y >= op_data;
         self.f_z = (difference & 0x00FF) == 0x0000;
-        self.f_n = (difference & 0x800) != 0;
+        self.f_n = (difference & 0x0080) != 0;
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::DEC => {
@@ -417,12 +427,13 @@ impl CPU {
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::LSR => {
+        println!("LSR {}", op_data);
         self.f_c = (op_data & 0x0001) != 0;
         let shifted = op_data >> 1;
         self.f_z = shifted == 0;
         self.f_n = (shifted & 0x80) != 0;
 
-        if instruction.addr_mode == AddressingMode::Implied {
+        if instruction.addr_mode == AddressingMode::Accumulator {
           self.r_a = shifted;
         } else {
           bus.write(self.location, shifted);
@@ -494,9 +505,12 @@ impl CPU {
       },
       Opcode::RTI => {
         self.sp += 1;
-        self.r_status = bus.read(0x0100 + self.sp as u16);
-        self.r_status &= ((!self.f_b) as u8) << 4;
-        self.r_status &= ((!self.f_u) as u8) << 5;
+        self.set_status_register(bus.read(0x0100 + self.sp as u16));
+
+        self.f_b = false;
+        self.f_u = true;
+
+        self.update_status_register();
 
         self.sp += 1;
         self.pc = bus.read(self.sp as u16 + 0x100) as u16;
@@ -722,10 +736,10 @@ impl CPU {
     let byte_str = instruction_bytes.iter().map(|byte| format!("{:02x}", byte)).collect::<Vec<String>>().join(" ");
     let instruction_string = format!("{:04x}  {:8} {: >4}", self.pc, byte_str, instruction.opcode);
 
-    let trace_string = format!("{:47} A:{:02x} X:{:02x} Y:{:02x} P:{:02x} SP:{:02x}", 
-      instruction_string, self.r_a, self.r_x, self.r_y, self.r_status, self.sp).to_ascii_uppercase();
+    let trace_string = format!("{:47} A:{:02x} X:{:02x} Y:{:02x} P:{:02x} SP:{:02x} CYC:{}\n", 
+      instruction_string, self.r_a, self.r_x, self.r_y, self.r_status, self.sp, self.cycles).to_ascii_uppercase();
 
-    println!("{}", trace_string);
+    self.trace_file.as_ref().unwrap().write_all(trace_string.as_bytes());
   }
 
   fn update_status_register(&mut self) {

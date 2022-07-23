@@ -98,7 +98,7 @@ impl Instruction {
       0x0D => Instruction { opcode: Opcode::ORA, addr_mode: AddressingMode::Absolute,     cycles: 4 },
       0x0E => Instruction { opcode: Opcode::ASL, addr_mode: AddressingMode::Absolute,     cycles: 6 },
       // 0x1*
-      0x10 => Instruction { opcode: Opcode::BPL, addr_mode: AddressingMode::Relative,     cycles: 6 },
+      0x10 => Instruction { opcode: Opcode::BPL, addr_mode: AddressingMode::Relative,     cycles: 2 },
       0x11 => Instruction { opcode: Opcode::ORA, addr_mode: AddressingMode::IndirectY,     cycles: 6 },
       0x15 => Instruction { opcode: Opcode::ORA, addr_mode: AddressingMode::ZeroPageX,    cycles: 4 },
       0x16 => Instruction { opcode: Opcode::ASL, addr_mode: AddressingMode::ZeroPageX,    cycles: 6 },

@@ -39,7 +39,7 @@ impl Bus {
         return self.ram[usize::from(addr & 0x7FF)];
       }
       0x2000 | 0x2001 | 0x2003 | 0x2005 | 0x2006 | 0x4014 => {
-        // println!("ATTEMPTED TO READ WRITE ONLY PPU ADDRESS {:04x}", addr);
+        println!("ATTEMPTED TO READ WRITE ONLY PPU ADDRESS {:04x}", addr);
         return 0;
       }
       PPU_MAP_READ => {
@@ -59,7 +59,7 @@ impl Bus {
         return self.cartridge.prg_rom[rom_location as usize];
       }
       _ => {
-        // println!("IGNORING MEMORY READ AT ADDRESS {:04x}", addr);
+        println!("IGNORING MEMORY READ AT ADDRESS {:04x}", addr);
         return 0;
       }
     }
@@ -78,10 +78,10 @@ impl Bus {
         return self.write(addr & 0x2007, value);
       }
       PRG_ROM_BEGIN ..= PRG_ROM_END => {
-        // println!("WRITE TO PRG ROM ATTEMPTED");
+        println!("WRITE TO PRG ROM ATTEMPTED");
       }
       _ => {
-        // println!("IGNORING MEMORY WRITE AT ADDRESS {:04x}", addr);
+        println!("IGNORING MEMORY WRITE AT ADDRESS {:04x}", addr);
       }
     }
   }

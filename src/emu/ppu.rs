@@ -12,7 +12,9 @@ pub struct PPU {
   byte_buffer: u8,
   
   mem_addr_reg: MemoryAddressRegister,
-  control_reg: u8
+  control_reg: u8,
+
+  cycles: usize
 }
 
 impl PPU {
@@ -25,7 +27,8 @@ impl PPU {
       palette_table: [0; 32],
       mem_addr_reg: MemoryAddressRegister::default(),
       control_reg: 0,
-      byte_buffer: 0
+      byte_buffer: 0,
+      cycles: 0
     }
   }
 
