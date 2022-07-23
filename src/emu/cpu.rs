@@ -662,9 +662,11 @@ impl CPU {
 
         // Page boundary hardware bug simulation
         if ptr_lo == 0x00FF {
-          self.location = (bus.read(ptr & 0xFF00) as u16) | bus.read(ptr) as u16;
+          self.location = ((bus.read(ptr & 0xFF00) as u16) << 8) | bus.read(ptr) as u16;
         } else {
-          self.location = ((bus.read(ptr + 1) as u16) << 8) | bus.read(ptr) as u16;
+          let lo = bus.read(ptr);
+          let hi = bus.read(ptr + 1);
+          self.location = ((hi as u16) << 8) | lo as u16;
         }
 
         return 0;

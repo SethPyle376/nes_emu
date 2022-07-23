@@ -18,7 +18,7 @@ fn main() {
   let opts = Opts::parse();
   let mut cpu = CPU::new(Some("blah".to_string()));
 
-  let cycle_count = 100_000;
+  let cycle_count = 25000;
   let mut cycles = 0;
 
   let mut bus = Bus::new(Cartridge::load(&opts.rom_path.as_str()).unwrap());
