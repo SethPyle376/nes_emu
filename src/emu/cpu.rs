@@ -229,6 +229,13 @@ impl CPU {
         self.f_c = (shifted & 0xFF00) != 0;
         self.f_z = (shifted & 0x00FF) == 0x00;
         self.f_n = (shifted & 0x80) != 0;
+        
+        if instruction.addr_mode == AddressingMode::Implied || instruction.addr_mode == AddressingMode::Accumulator {
+          self.r_a = (shifted & 0x00FF) as u8;
+        } else {
+          bus.write(self.location, (shifted & 0x00FF) as u8);
+        }
+
         return address_mode_cycles + instruction.cycles;
       },
       Opcode::BCC => {
@@ -264,7 +271,7 @@ impl CPU {
           self.location = self.pc + self.relative_location;
           self.pc = self.location;
         }
-        return address_mode_cycles + instruction.cycles;
+        return address_mode_cycles + instruction.cycles + if self.f_n {1} else {0};
       },
       Opcode::BNE => {
         if self.f_z == false {
@@ -482,7 +489,7 @@ impl CPU {
         self.f_z = (shifted & 0x00FF) == 0;
         self.f_n = (shifted & 0x80) != 0;
 
-        if instruction.addr_mode == AddressingMode::Implied {
+        if instruction.addr_mode == AddressingMode::Implied || instruction.addr_mode == AddressingMode::Accumulator {
           self.r_a = (shifted & 0x00FF) as u8;
         } else {
           bus.write(self.location, (shifted & 0x00FF) as u8);
@@ -495,7 +502,7 @@ impl CPU {
         self.f_z = (shifted & 0x00FF) == 0;
         self.f_n = (shifted & 0x80) != 0;
 
-        if instruction.addr_mode == AddressingMode::Implied {
+        if instruction.addr_mode == AddressingMode::Implied || instruction.addr_mode == AddressingMode::Accumulator {
           self.r_a = (shifted & 0x00FF) as u8;
         } else {
           bus.write(self.location, (shifted & 0x00FF) as u8);
