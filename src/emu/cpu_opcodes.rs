@@ -184,7 +184,7 @@ impl Instruction {
       0x95 => Instruction { opcode: Opcode::STA, addr_mode: AddressingMode::ZeroPageX,    cycles: 4 },
       0x96 => Instruction { opcode: Opcode::STX, addr_mode: AddressingMode::ZeroPageY,    cycles: 4 },
       0x98 => Instruction { opcode: Opcode::TYA, addr_mode: AddressingMode::Implied,      cycles: 2 },
-      0x99 => Instruction { opcode: Opcode::STA, addr_mode: AddressingMode::AbsoluteX,    cycles: 5 },
+      0x99 => Instruction { opcode: Opcode::STA, addr_mode: AddressingMode::AbsoluteY,    cycles: 5 },
       0x9A => Instruction { opcode: Opcode::TXS, addr_mode: AddressingMode::Implied,      cycles: 2 },
       0x9D => Instruction { opcode: Opcode::STA, addr_mode: AddressingMode::AbsoluteX,    cycles: 5 },
       // 0xA*

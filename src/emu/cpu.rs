@@ -616,15 +616,15 @@ impl CPU {
         return 0;
       },
       AddressingMode::ZeroPageX => {
-        let msb = bus.read(self.pc + self.r_x as u16);
+        let msb = bus.read(self.pc);
         self.pc += 1;
-        self.location = msb as u16 & 0x00FF;
+        self.location = (msb as u16 + self.r_x as u16) & 0x00FF;
         return 0;
       },
       AddressingMode::ZeroPageY => {
-        let msb = bus.read(self.pc + self.r_y as u16);
+        let msb = bus.read(self.pc);
         self.pc += 1;
-        self.location = msb as u16 & 0x00FF;
+        self.location = (msb as u16 + self.r_y as u16) & 0x00FF;
         return 0;
       },
       AddressingMode::Relative => {
@@ -652,11 +652,7 @@ impl CPU {
         self.location = (hi << 8) | lo;
         self.location += self.r_x as u16;
 
-        if (self.location & 0xFF00) != (hi << 8) {
-          return 1;
-        } else {
-          return 0;
-        }
+        return 0;
       },
       AddressingMode::AbsoluteY => {
         let lo = bus.read(self.pc) as u16;
@@ -667,11 +663,7 @@ impl CPU {
         self.location = (hi << 8) | lo;
         self.location += self.r_y as u16;
 
-        if (self.location & 0xFF00) != (hi << 8) {
-          return 1;
-        } else {
-          return 0;
-        }
+        return 0;
       },
       AddressingMode::Indirect => {
         let ptr_lo = bus.read(self.pc) as u16;
